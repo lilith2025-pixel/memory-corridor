@@ -224,58 +224,89 @@
   <div class="footer-meta">私人档案<br>2025 —<br>Brisbane</div>
 </footer>
 
+
 <script>
-// thought border colors
-const thoughtColors = ['var(--terra)','var(--sage)','var(--gold)','var(--dusty)','var(--sky)','var(--terra-lt)'];
-const thoughtEmColors = ['var(--terra)','var(--sage)','var(--gold)','var(--dusty)','var(--sky)','var(--terra-lt)'];
+const REPO = 'lilith2025-pixel/memory-corridor';
+const thoughtColors = ['var(--terra)','var(--sage)','var(--gold)','var(--dusty)','var(--sky)'];
 
-fetch('content.json?v=' + Date.now())
-  .then(r => r.json())
-  .then(data => {
-    // Writings
-    const wc = document.getElementById('writings-container');
-    data.writings.forEach((w, i) => {
-      const cls = i === 0 ? 'w-card w-feat' : (i === 1 ? 'w-card w-2' : 'w-card w-3');
-      wc.innerHTML += `
-        <div class="${cls}">
-          <div class="w-date">${w.date}</div>
-          <h2 class="w-title">${w.title}</h2>
-          <p class="w-excerpt">${w.excerpt}</p>
-          <span class="w-more">继续读 →</span>
-        </div>`;
-    });
-
-    // Characters
-    const cc = document.getElementById('characters-container');
-    data.characters.forEach(c => {
-      cc.innerHTML += `
-        <div class="char-card ${c.style}">
-          <div class="char-num">${c.number}</div>
-          <div class="char-tag">${c.tag}</div>
-          <div class="char-name">${c.name}</div>
-          <div class="char-name-en">${c.nameEn}</div>
-          <p class="char-desc">${c.desc}</p>
-          <div class="char-note">${c.note}</div>
-        </div>`;
-    });
-
-    // Thoughts
-    const tc = document.getElementById('thoughts-container');
-    data.thoughts.forEach((t, i) => {
-      const color = thoughtColors[i % thoughtColors.length];
-      const emColor = thoughtEmColors[i % thoughtEmColors.length];
-      tc.innerHTML += `
-        <div class="thought" style="border-left:3px solid ${color}">
-          <style>#thoughts-container .thought:nth-child(${i+1}) em{color:${emColor};font-style:italic}</style>
-          <p class="thought-text">${t.text}</p>
-          <div class="thought-date">${t.date}</div>
-        </div>`;
-    });
-  })
-  .catch(() => {
-    // fallback if content.json fails to load
-    document.getElementById('writings-container').innerHTML = '<p style="color:var(--mist);padding:2rem">内容加载中…</p>';
+function parseFM(text) {
+  const m = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!m) return {};
+  const obj = {};
+  m[1].split('\n').forEach(line => {
+    const i = line.indexOf(':');
+    if (i < 0) return;
+    const key = line.slice(0, i).trim();
+    let val = line.slice(i+1).trim().replace(/^["']|["']$/g, '');
+    if (val === 'true') val = true;
+    else if (val === 'false') val = false;
+    obj[key] = val;
   });
+  return obj;
+}
+
+async function loadFolder(folder) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${folder}`);
+    if (!r.ok) return [];
+    const files = await r.json();
+    if (!Array.isArray(files)) return [];
+    const items = await Promise.all(
+      files.filter(f => f.name.endsWith('.md')).map(async f => {
+        const r2 = await fetch(f.download_url);
+        const text = await r2.text();
+        return parseFM(text);
+      })
+    );
+    return items;
+  } catch(e) { return []; }
+}
+
+async function init() {
+  const [writings, characters, thoughts] = await Promise.all([
+    loadFolder('_writings'),
+    loadFolder('_characters'),
+    loadFolder('_thoughts')
+  ]);
+
+  const wc = document.getElementById('writings-container');
+  if (!writings.length) {
+    wc.innerHTML = '<div style="padding:2rem;color:var(--mist);font-family:\'Cormorant Garamond\',serif;font-style:italic;grid-column:1/-1">暂无文章</div>';
+  } else {
+    wc.innerHTML = '';
+    const sorted = [...writings].sort((a,b) => (b.featured?1:0)-(a.featured?1:0));
+    sorted.forEach((w,i) => {
+      const cls = i===0 ? 'w-card w-feat' : (i===1 ? 'w-card w-2' : 'w-card w-3');
+      wc.innerHTML += `<div class="${cls}"><div class="w-date">${w.date||''}</div><h2 class="w-title">${w.title||''}</h2><p class="w-excerpt">${w.excerpt||''}</p><span class="w-more">继续读 →</span></div>`;
+    });
+  }
+
+  const cc = document.getElementById('characters-container');
+  if (!characters.length) {
+    cc.innerHTML = '<div style="padding:2rem;color:var(--mist);font-family:\'Cormorant Garamond\',serif;font-style:italic">暂无人物</div>';
+  } else {
+    cc.innerHTML = '';
+    characters.forEach(c => {
+      cc.innerHTML += `<div class="char-card ${c.style||'char-1'}"><div class="char-num">${c.number||''}</div><div class="char-tag">${c.tag||''}</div><div class="char-name">${c.name||''}</div><div class="char-name-en">${c.nameEn||''}</div><p class="char-desc">${c.desc||''}</p><div class="char-note">${c.note||''}</div></div>`;
+    });
+  }
+
+  const tc = document.getElementById('thoughts-container');
+  if (!thoughts.length) {
+    tc.innerHTML = '<div style="padding:2rem;color:var(--mist);font-family:\'Cormorant Garamond\',serif;font-style:italic">暂无碎想</div>';
+  } else {
+    tc.innerHTML = '';
+    thoughts.forEach((t,i) => {
+      tc.innerHTML += `<div class="thought" style="border-left:3px solid ${thoughtColors[i%thoughtColors.length]}"><p class="thought-text">${t.text||''}</p><div class="thought-date">${t.date||''}</div></div>`;
+    });
+  }
+}
+
+init();
+
+if(window.netlifyIdentity){
+  window.netlifyIdentity.on('init', user => {
+    if(!user){ window.netlifyIdentity.on('login', () => { document.location.href='/admin/'; }); }
+  });
+}
 </script>
-</body>
-</html>
