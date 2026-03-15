@@ -11,7 +11,7 @@ collections:
     label: "文字"
     folder: "_writings"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - {label: "日期标签", name: "date", widget: "string", hint: "例：2025 · 春"}
       - {label: "标题", name: "title", widget: "string"}
@@ -22,7 +22,7 @@ collections:
     label: "碎想"
     folder: "_thoughts"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - {label: "内容", name: "text", widget: "text"}
       - {label: "日期", name: "date", widget: "string", hint: "例：2025.06"}
@@ -31,7 +31,7 @@ collections:
     label: "人物"
     folder: "_characters"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - {label: "中文名", name: "name", widget: "string"}
       - {label: "英文名", name: "nameEn", widget: "string"}
