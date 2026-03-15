@@ -243,6 +243,7 @@ function parseFM(text) {
     if (i < 0) return;
     const key = line.slice(0, i).trim();
     let val = line.slice(i+1).trim().replace(/^["']|["']$/g, '');
+    val = val.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
     if (val === 'true') val = true;
     else if (val === 'false') val = false;
     obj[key] = val;
