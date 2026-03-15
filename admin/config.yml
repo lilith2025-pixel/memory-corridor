@@ -1,0 +1,40 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: zh_Hans
+
+collections:
+  - name: "writings"
+    label: "文字"
+    folder: "_writings"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "日期标签", name: "date", widget: "string", hint: "例：2025 · 春"}
+      - {label: "标题", name: "title", widget: "string"}
+      - {label: "摘要", name: "excerpt", widget: "text"}
+      - {label: "置顶显示", name: "featured", widget: "boolean", default: false}
+
+  - name: "thoughts"
+    label: "碎想"
+    folder: "_thoughts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "内容", name: "text", widget: "text"}
+      - {label: "日期", name: "date", widget: "string", hint: "例：2025.06"}
+
+  - name: "characters"
+    label: "人物"
+    folder: "_characters"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "中文名", name: "name", widget: "string"}
+      - {label: "英文名", name: "nameEn", widget: "string"}
+      - {label: "序号", name: "number", widget: "string", hint: "一、二、三…"}
+      - {label: "标签", name: "tag", widget: "string"}
+      - {label: "简介", name: "desc", widget: "text"}
+      - {label: "底部注释", name: "note", widget: "string"}
+      - {label: "样式", name: "style", widget: "select", options: ["char-1", "char-2", "char-3"], default: "char-1"}
