@@ -7,15 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#f5efe4;--bg2:#ede5d6;--bg3:#e8dfc8;
-    --ink:#2a2118;--ink-lt:#5a4e40;--mist:#9a8e7e;
-    --terra:#b85c38;--sage:#5a7a5e;--gold:#a07830;--dusty:#8a5a7a;--sky:#4a7090;
-  }
+  :root{--bg:#f5efe4;--bg2:#ede5d6;--bg3:#e8dfc8;--ink:#2a2118;--ink-lt:#5a4e40;--mist:#9a8e7e;--terra:#b85c38;--sage:#5a7a5e;--gold:#a07830;--dusty:#8a5a7a;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--ink);font-family:'Noto Serif SC',serif;min-height:100vh;}
-
-  /* ── LOGIN ── */
   #login{min-height:100vh;display:flex;align-items:center;justify-content:center;}
   .login-box{width:100%;max-width:420px;padding:3rem;background:var(--bg2);border:1px solid rgba(42,33,24,0.08);position:relative;}
   .login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--sage),var(--dusty),var(--gold));}
@@ -27,75 +21,58 @@
   .btn-enter{width:100%;padding:0.85rem;background:var(--terra);color:#f5efe4;border:none;cursor:pointer;font-family:'Noto Serif SC',serif;font-size:0.85rem;letter-spacing:0.1em;transition:background 0.2s;}
   .btn-enter:hover{background:#9a4828;}
   .login-err{color:var(--terra);font-size:0.8rem;margin-top:0.8rem;display:none;}
-
-  /* ── MAIN ── */
   #main{display:none;}
   .topbar{background:var(--bg2);border-bottom:1px solid rgba(42,33,24,0.08);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
   .topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--sage),var(--dusty),var(--gold));}
   .topbar-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;}
-  .topbar-right{display:flex;gap:0.8rem;align-items:center;}
-  .btn{padding:0.5rem 1.2rem;border:none;cursor:pointer;font-family:'Noto Serif SC',serif;font-size:0.78rem;letter-spacing:0.08em;transition:all 0.2s;}
+  .topbar-right{display:flex;gap:0.8rem;}
+  .btn{padding:0.5rem 1.2rem;border:none;cursor:pointer;font-family:'Noto Serif SC',serif;font-size:0.78rem;letter-spacing:0.08em;transition:all 0.2s;text-decoration:none;display:inline-block;}
   .btn-primary{background:var(--terra);color:#f5efe4;}
   .btn-primary:hover{background:#9a4828;}
   .btn-primary:disabled{background:var(--mist);cursor:not-allowed;}
   .btn-ghost{background:transparent;color:var(--mist);border:1px solid rgba(42,33,24,0.12);}
   .btn-ghost:hover{color:var(--ink);}
-  .btn-danger{background:transparent;color:var(--terra);border:1px solid rgba(184,92,56,0.3);font-size:0.7rem;padding:0.3rem 0.7rem;}
-  .btn-danger:hover{background:rgba(184,92,56,0.08);}
-
+  .btn-sm-danger{background:transparent;color:var(--terra);border:1px solid rgba(184,92,56,0.3);font-size:0.7rem;padding:0.3rem 0.7rem;cursor:pointer;font-family:'Noto Serif SC',serif;transition:background 0.2s;}
+  .btn-sm-danger:hover{background:rgba(184,92,56,0.08);}
+  .btn-sm-edit{background:transparent;color:var(--sage);border:1px solid rgba(90,122,94,0.3);font-size:0.7rem;padding:0.3rem 0.7rem;cursor:pointer;font-family:'Noto Serif SC',serif;transition:background 0.2s;}
+  .btn-sm-edit:hover{background:rgba(90,122,94,0.08);}
+  .editing-badge{font-size:0.62rem;background:rgba(90,122,94,0.12);color:var(--sage);padding:0.15em 0.6em;margin-left:0.6rem;display:none;}
   .main-body{max-width:820px;margin:0 auto;padding:2.5rem 2rem 6rem;}
-
   .tabs{display:flex;border-bottom:2px solid rgba(42,33,24,0.08);margin-bottom:2.5rem;}
   .tab{padding:0.7rem 1.4rem;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--mist);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'Noto Serif SC',serif;transition:color 0.2s,border-color 0.2s;}
   .tab.active{color:var(--terra);border-bottom-color:var(--terra);}
-
   .tab-panel{display:none;}
   .tab-panel.active{display:block;}
-
-  /* ── EDITOR ── */
   .editor-wrap{background:var(--bg2);border:1px solid rgba(42,33,24,0.08);padding:2rem;margin-bottom:2rem;position:relative;}
   .editor-wrap::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
-  .editor-thoughts::before{background:var(--terra);}
-  .editor-writings::before{background:var(--sage);}
-  .editor-characters::before{background:var(--dusty);}
-
-  .editor-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--ink-lt);margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;}
-
+  .et::before{background:var(--terra);}
+  .ew::before{background:var(--sage);}
+  .ec::before{background:var(--dusty);}
+  .editor-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--ink-lt);margin-bottom:1.5rem;display:flex;align-items:center;}
   .field{margin-bottom:1.4rem;}
-  .field:last-child{margin-bottom:0;}
   .field label{display:block;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:0.4rem;}
   .field input,.field textarea,.field select{width:100%;padding:0.65rem 0.9rem;background:var(--bg);border:1px solid rgba(42,33,24,0.12);color:var(--ink);font-family:'Noto Serif SC',serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
   .field input:focus,.field textarea:focus{border-color:var(--terra);}
   .field textarea{resize:vertical;min-height:100px;line-height:1.7;}
-  .field-hint{font-size:0.68rem;color:var(--mist);margin-top:0.3rem;font-family:'Cormorant Garamond',serif;font-style:italic;}
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-
   .btn-add{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(42,33,24,0.18);color:var(--mist);cursor:pointer;font-family:'Noto Serif SC',serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.2s;margin-top:0.3rem;}
   .btn-add:hover{border-color:var(--terra);color:var(--terra);}
-
-  /* ── EXISTING ITEMS ── */
   .items-list{margin-bottom:2rem;}
-  .item-row{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;background:var(--bg2);border:1px solid rgba(42,33,24,0.07);margin-bottom:4px;transition:background 0.2s;}
-  .item-row:hover{background:var(--bg3);}
-  .item-info{flex:1;}
-  .item-name{font-size:0.9rem;color:var(--ink);margin-bottom:0.2rem;}
-  .item-meta{font-size:0.65rem;color:var(--mist);letter-spacing:0.1em;}
-  .item-actions{display:flex;gap:0.5rem;}
-
-  /* ── TOAST ── */
-  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:0.8rem 2rem;font-size:0.8rem;letter-spacing:0.08em;pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:9999;white-space:nowrap;}
+  .item-row{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;background:var(--bg2);border:1px solid rgba(42,33,24,0.07);margin-bottom:4px;}
+  .item-info{flex:1;min-width:0;margin-right:1rem;}
+  .item-name{font-size:0.9rem;color:var(--ink);margin-bottom:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .item-meta{font-size:0.65rem;color:var(--mist);}
+  .item-actions{display:flex;gap:0.5rem;flex-shrink:0;}
+  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:0.8rem 2rem;font-size:0.8rem;pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:9999;}
   .toast.show{opacity:1;}
   .toast.success{background:var(--sage);color:#f5efe4;}
   .toast.error{background:var(--terra);color:#f5efe4;}
   .toast.loading{background:var(--gold);color:#f5efe4;}
-
-  /* ── LOADING ── */
-  .loading-text{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--mist);padding:2rem;text-align:center;}
+  .empty{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--mist);padding:2rem;text-align:center;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login">
   <div class="login-box">
     <h1 class="login-title">记忆回廊</h1>
@@ -107,7 +84,6 @@
   </div>
 </div>
 
-<!-- MAIN -->
 <div id="main">
   <div class="topbar">
     <span class="topbar-title">记忆回廊 · 编辑后台</span>
@@ -116,7 +92,6 @@
       <button class="btn btn-ghost" onclick="logout()">退出</button>
     </div>
   </div>
-
   <div class="main-body">
     <div class="tabs">
       <button class="tab active" onclick="switchTab('thoughts',this)">碎想</button>
@@ -126,92 +101,70 @@
 
     <!-- 碎想 -->
     <div class="tab-panel active" id="tab-thoughts">
-      <div id="thoughts-list" class="items-list"><div class="loading-text">加载中…</div></div>
-      <div class="editor-wrap editor-thoughts" id="new-thought" style="display:none">
-        <div class="editor-title">新碎想</div>
+      <div id="thoughts-list" class="items-list"><div class="empty">加载中…</div></div>
+      <div class="editor-wrap et" id="form-thought" style="display:none">
+        <div class="editor-title">
+          <span id="t-label">新碎想</span>
+          <span class="editing-badge" id="t-badge">编辑中</span>
+        </div>
         <div class="field">
-          <label>内容 <span style="font-size:0.6rem;color:var(--mist);text-transform:none;letter-spacing:0">&nbsp;·&nbsp; 用 &lt;em&gt;词&lt;/em&gt; 加颜色</span></label>
-          <textarea id="t-text" rows="4" placeholder="写下此刻…"></textarea>
+          <label>内容 &nbsp;·&nbsp; <span style="font-size:0.6rem;color:var(--mist);text-transform:none;letter-spacing:0">用 &lt;em&gt;词&lt;/em&gt; 加颜色</span></label>
+          <textarea id="t-text" rows="5" placeholder="写下此刻…"></textarea>
         </div>
-        <div class="field" style="max-width:160px">
-          <label>日期</label>
-          <input id="t-date" placeholder="2025.03">
-        </div>
+        <div class="field" style="max-width:180px"><label>日期</label><input id="t-date" placeholder="2025.03"></div>
         <div style="display:flex;gap:0.8rem;margin-top:1.5rem">
-          <button class="btn btn-primary" id="t-save-btn" onclick="saveThought()">发布</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('new-thought').style.display='none'">取消</button>
+          <button class="btn btn-primary" id="t-btn" onclick="saveThought()">发布</button>
+          <button class="btn btn-ghost" onclick="closeForm('thought')">取消</button>
         </div>
       </div>
-      <button class="btn-add" onclick="document.getElementById('new-thought').style.display='block';document.getElementById('t-text').focus()">＋ 新碎想</button>
+      <button class="btn-add" onclick="openForm('thought')">＋ 新碎想</button>
     </div>
 
     <!-- 文字 -->
     <div class="tab-panel" id="tab-writings">
-      <div id="writings-list" class="items-list"><div class="loading-text">加载中…</div></div>
-      <div class="editor-wrap editor-writings" id="new-writing" style="display:none">
-        <div class="editor-title">新文章</div>
-        <div class="field">
-          <label>标题</label>
-          <input id="w-title" placeholder="文章标题">
+      <div id="writings-list" class="items-list"><div class="empty">加载中…</div></div>
+      <div class="editor-wrap ew" id="form-writing" style="display:none">
+        <div class="editor-title">
+          <span id="w-label">新文章</span>
+          <span class="editing-badge" id="w-badge">编辑中</span>
         </div>
+        <div class="field"><label>标题</label><input id="w-title" placeholder="文章标题"></div>
         <div class="field-row">
-          <div class="field">
-            <label>日期标签</label>
-            <input id="w-date" placeholder="2025 · 春">
-          </div>
-          <div class="field">
-            <label>置顶</label>
-            <select id="w-featured">
-              <option value="false">否</option>
-              <option value="true">是（最大卡片）</option>
-            </select>
-          </div>
+          <div class="field"><label>日期标签</label><input id="w-date" placeholder="2025 · 春"></div>
+          <div class="field"><label>置顶</label><select id="w-featured"><option value="false">否</option><option value="true">是（最大卡片）</option></select></div>
         </div>
-        <div class="field">
-          <label>摘要</label>
-          <textarea id="w-excerpt" rows="4" placeholder="首页显示的预览文字…"></textarea>
-        </div>
+        <div class="field"><label>摘要</label><textarea id="w-excerpt" rows="4" placeholder="首页预览文字…"></textarea></div>
         <div style="display:flex;gap:0.8rem;margin-top:1.5rem">
-          <button class="btn btn-primary" id="w-save-btn" onclick="saveWriting()">发布</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('new-writing').style.display='none'">取消</button>
+          <button class="btn btn-primary" id="w-btn" onclick="saveWriting()">发布</button>
+          <button class="btn btn-ghost" onclick="closeForm('writing')">取消</button>
         </div>
       </div>
-      <button class="btn-add" onclick="document.getElementById('new-writing').style.display='block';document.getElementById('w-title').focus()">＋ 新文章</button>
+      <button class="btn-add" onclick="openForm('writing')">＋ 新文章</button>
     </div>
 
     <!-- 人物 -->
     <div class="tab-panel" id="tab-characters">
-      <div id="characters-list" class="items-list"><div class="loading-text">加载中…</div></div>
-      <div class="editor-wrap editor-characters" id="new-character" style="display:none">
-        <div class="editor-title">新人物</div>
+      <div id="characters-list" class="items-list"><div class="empty">加载中…</div></div>
+      <div class="editor-wrap ec" id="form-character" style="display:none">
+        <div class="editor-title">
+          <span id="c-label">新人物</span>
+          <span class="editing-badge" id="c-badge">编辑中</span>
+        </div>
         <div class="field-row">
           <div class="field"><label>中文名</label><input id="c-name" placeholder="南 山"></div>
           <div class="field"><label>英文名</label><input id="c-nameEn" placeholder="Nan Shan"></div>
           <div class="field"><label>序号</label><input id="c-number" placeholder="一"></div>
-          <div class="field"><label>标签</label><input id="c-tag" placeholder="都市轻喜剧 · BL"></div>
+          <div class="field"><label>标签</label><input id="c-tag" placeholder="都市轻喜剧"></div>
         </div>
-        <div class="field">
-          <label>简介</label>
-          <textarea id="c-desc" rows="4" placeholder="人物简介…"></textarea>
-        </div>
-        <div class="field">
-          <label>底部注释</label>
-          <input id="c-note" placeholder="「关于他的故事…」">
-        </div>
-        <div class="field">
-          <label>样式</label>
-          <select id="c-style">
-            <option value="char-1">金色系（char-1）</option>
-            <option value="char-2">紫色系（char-2）</option>
-            <option value="char-3">蓝色系（char-3）</option>
-          </select>
-        </div>
+        <div class="field"><label>简介</label><textarea id="c-desc" rows="4" placeholder="人物简介…"></textarea></div>
+        <div class="field"><label>底部注释</label><input id="c-note" placeholder="「关于他的故事…」"></div>
+        <div class="field"><label>样式</label><select id="c-style"><option value="char-1">金色系</option><option value="char-2">紫色系</option><option value="char-3">蓝色系</option></select></div>
         <div style="display:flex;gap:0.8rem;margin-top:1.5rem">
-          <button class="btn btn-primary" id="c-save-btn" onclick="saveCharacter()">发布</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('new-character').style.display='none'">取消</button>
+          <button class="btn btn-primary" id="c-btn" onclick="saveCharacter()">发布</button>
+          <button class="btn btn-ghost" onclick="closeForm('character')">取消</button>
         </div>
       </div>
-      <button class="btn-add" onclick="document.getElementById('new-character').style.display='block';document.getElementById('c-name').focus()">＋ 新人物</button>
+      <button class="btn-add" onclick="openForm('character')">＋ 新人物</button>
     </div>
   </div>
 </div>
@@ -222,6 +175,20 @@
 const REPO = 'lilith2025-pixel/memory-corridor';
 let TOKEN = '';
 
+// 用一个全局 Map 存储条目数据，避免 HTML 注入问题
+const itemStore = new Map();
+let storeCounter = 0;
+
+function storeItem(item) {
+  const key = 'k' + (++storeCounter);
+  itemStore.set(key, item);
+  return key;
+}
+
+function getItem(key) {
+  return itemStore.get(key);
+}
+
 // ── AUTH ──
 async function login() {
   const t = document.getElementById('token-input').value.trim();
@@ -231,7 +198,7 @@ async function login() {
     const r = await fetch(`https://api.github.com/repos/${REPO}/contents/index.html`, {
       headers: { Authorization: `token ${t}` }
     });
-    if (!r.ok) throw new Error('auth failed');
+    if (!r.ok) throw new Error();
     TOKEN = t;
     localStorage.setItem('mc_edit_token', TOKEN);
     document.getElementById('login').style.display = 'none';
@@ -244,12 +211,8 @@ async function login() {
   }
 }
 
-function logout() {
-  localStorage.removeItem('mc_edit_token');
-  location.reload();
-}
+function logout() { localStorage.removeItem('mc_edit_token'); location.reload(); }
 
-// ── TABS ──
 function switchTab(name, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -265,25 +228,29 @@ async function getFolder(folder) {
   if (!r.ok) return [];
   const files = await r.json();
   if (!Array.isArray(files)) return [];
-  const items = await Promise.all(
-    files.filter(f => f.name.endsWith('.md')).map(async f => {
-      const r2 = await fetch(f.download_url);
-      const text = await r2.text();
-      return { ...parseFM(text), _filename: f.name, _sha: f.sha, _path: f.path };
-    })
-  );
-  return items;
+  return Promise.all(files.filter(f => f.name.endsWith('.md')).map(async f => {
+    const r2 = await fetch(f.download_url + '?v=' + Date.now());
+    const text = await r2.text();
+    return { ...parseFM(text), _filename: f.name, _sha: f.sha, _path: f.path };
+  }));
 }
 
 async function createFile(path, content) {
-  const encoded = btoa(unescape(encodeURIComponent(content)));
   const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
     method: 'PUT',
     headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: `新增 ${path}`, content: encoded })
+    body: JSON.stringify({ message: `新增 ${path}`, content: btoa(unescape(encodeURIComponent(content))) })
   });
-  if (!r.ok) throw new Error('create failed');
-  return r.json();
+  if (!r.ok) throw new Error();
+}
+
+async function updateFile(path, sha, content) {
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: `更新 ${path}`, content: btoa(unescape(encodeURIComponent(content))), sha })
+  });
+  if (!r.ok) throw new Error();
 }
 
 async function deleteFile(path, sha) {
@@ -292,7 +259,7 @@ async function deleteFile(path, sha) {
     headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: `删除 ${path}`, sha })
   });
-  if (!r.ok) throw new Error('delete failed');
+  if (!r.ok) throw new Error();
 }
 
 function parseFM(text) {
@@ -312,11 +279,7 @@ function parseFM(text) {
 }
 
 function makeFM(obj) {
-  const lines = Object.entries(obj).map(([k, v]) => {
-    if (typeof v === 'boolean') return `${k}: ${v}`;
-    return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
-  });
-  return `---\n${lines.join('\n')}\n---\n`;
+  return `---\n${Object.entries(obj).map(([k,v]) => typeof v === 'boolean' ? `${k}: ${v}` : `${k}: "${String(v).replace(/"/g, '\\"')}"`).join('\n')}\n---\n`;
 }
 
 function nowSlug() {
@@ -324,158 +287,226 @@ function nowSlug() {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}-${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
-// ── LOAD ALL ──
-async function loadAll() {
-  loadThoughts();
-  loadWritings();
-  loadCharacters();
+async function loadAll() { loadThoughts(); loadWritings(); loadCharacters(); }
+
+// ── FORM HELPERS ──
+let currentEditing = { thought: null, writing: null, character: null };
+
+function openForm(type) {
+  currentEditing[type] = null;
+  const prefix = type === 'thought' ? 't' : type === 'writing' ? 'w' : 'c';
+  document.getElementById(prefix + '-label').textContent = type === 'thought' ? '新碎想' : type === 'writing' ? '新文章' : '新人物';
+  document.getElementById(prefix + '-badge').style.display = 'none';
+  // clear fields
+  if (type === 'thought') {
+    document.getElementById('t-text').value = '';
+    document.getElementById('t-date').value = '';
+  } else if (type === 'writing') {
+    document.getElementById('w-title').value = '';
+    document.getElementById('w-date').value = '';
+    document.getElementById('w-excerpt').value = '';
+    document.getElementById('w-featured').value = 'false';
+  } else {
+    ['c-name','c-nameEn','c-number','c-tag','c-desc','c-note'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('c-style').value = 'char-1';
+  }
+  const formId = 'form-' + (type === 'thought' ? 'thought' : type === 'writing' ? 'writing' : 'character');
+  document.getElementById(formId).style.display = 'block';
+}
+
+function openEditForm(type, key) {
+  const item = getItem(key);
+  if (!item) return;
+  currentEditing[type] = item;
+  const prefix = type === 'thought' ? 't' : type === 'writing' ? 'w' : 'c';
+  document.getElementById(prefix + '-label').textContent = type === 'thought' ? '编辑碎想' : type === 'writing' ? '编辑文章' : '编辑人物';
+  document.getElementById(prefix + '-badge').style.display = 'inline';
+
+  if (type === 'thought') {
+    document.getElementById('t-text').value = item.text || '';
+    document.getElementById('t-date').value = item.date || '';
+  } else if (type === 'writing') {
+    document.getElementById('w-title').value = item.title || '';
+    document.getElementById('w-date').value = item.date || '';
+    document.getElementById('w-excerpt').value = item.excerpt || '';
+    document.getElementById('w-featured').value = item.featured ? 'true' : 'false';
+  } else {
+    document.getElementById('c-name').value = item.name || '';
+    document.getElementById('c-nameEn').value = item.nameEn || '';
+    document.getElementById('c-number').value = item.number || '';
+    document.getElementById('c-tag').value = item.tag || '';
+    document.getElementById('c-desc').value = item.desc || '';
+    document.getElementById('c-note').value = item.note || '';
+    document.getElementById('c-style').value = item.style || 'char-1';
+  }
+
+  const formId = 'form-' + (type === 'thought' ? 'thought' : type === 'writing' ? 'writing' : 'character');
+  document.getElementById(formId).style.display = 'block';
+  document.getElementById(formId).scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeForm(type) {
+  currentEditing[type] = null;
+  const formId = 'form-' + (type === 'thought' ? 'thought' : type === 'writing' ? 'writing' : 'character');
+  document.getElementById(formId).style.display = 'none';
 }
 
 // ── THOUGHTS ──
 async function loadThoughts() {
   const el = document.getElementById('thoughts-list');
-  el.innerHTML = '<div class="loading-text">加载中…</div>';
+  el.innerHTML = '<div class="empty">加载中…</div>';
+  itemStore.clear();
   const items = await getFolder('_thoughts');
-  if (!items.length) { el.innerHTML = '<div class="loading-text">暂无碎想</div>'; return; }
-  el.innerHTML = items.map(t => `
-    <div class="item-row">
+  if (!items.length) { el.innerHTML = '<div class="empty">暂无碎想</div>'; return; }
+  el.innerHTML = '';
+  items.forEach(item => {
+    const key = storeItem(item);
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `
       <div class="item-info">
-        <div class="item-name">${(t.text||'').replace(/<[^>]+>/g,'').slice(0,60)}…</div>
-        <div class="item-meta">${t.date||''} · ${t._filename}</div>
+        <div class="item-name">${(item.text||'').replace(/<[^>]+>/g,'').slice(0,55)}…</div>
+        <div class="item-meta">${item.date||''} · ${item._filename}</div>
       </div>
       <div class="item-actions">
-        <button class="btn btn-danger" onclick="deleteItem('_thoughts','${t._filename}','${t._sha}',loadThoughts)">删除</button>
-      </div>
-    </div>`).join('');
+        <button class="btn-sm-edit" data-key="${key}" data-type="thought">编辑</button>
+        <button class="btn-sm-danger" data-path="${item._path}" data-sha="${item._sha}" data-reload="thoughts">删除</button>
+      </div>`;
+    el.appendChild(div);
+  });
+  bindButtons();
 }
 
 async function saveThought() {
   const text = document.getElementById('t-text').value.trim();
   const date = document.getElementById('t-date').value.trim();
   if (!text) return showToast('内容不能为空', 'error');
-  const btn = document.getElementById('t-save-btn');
-  btn.disabled = true;
-  showToast('发布中…', 'loading');
+  const btn = document.getElementById('t-btn'); btn.disabled = true;
+  const editing = currentEditing.thought;
+  showToast(editing ? '更新中…' : '发布中…', 'loading');
   try {
     const content = makeFM({ text, date });
-    await createFile(`_thoughts/${nowSlug()}.md`, content);
-    document.getElementById('t-text').value = '';
-    document.getElementById('t-date').value = '';
-    document.getElementById('new-thought').style.display = 'none';
-    showToast('✓ 发布成功，约1分钟后网站更新', 'success');
-    loadThoughts();
-  } catch(e) { showToast('发布失败，请重试', 'error'); }
+    if (editing) await updateFile(editing._path, editing._sha, content);
+    else await createFile(`_thoughts/${nowSlug()}.md`, content);
+    showToast('✓ 成功，约1分钟后网站更新', 'success');
+    closeForm('thought'); loadThoughts();
+  } catch(e) { showToast('操作失败，请重试', 'error'); }
   btn.disabled = false;
 }
 
 // ── WRITINGS ──
 async function loadWritings() {
   const el = document.getElementById('writings-list');
-  el.innerHTML = '<div class="loading-text">加载中…</div>';
+  el.innerHTML = '<div class="empty">加载中…</div>';
   const items = await getFolder('_writings');
-  if (!items.length) { el.innerHTML = '<div class="loading-text">暂无文章</div>'; return; }
-  el.innerHTML = items.map(w => `
-    <div class="item-row">
+  if (!items.length) { el.innerHTML = '<div class="empty">暂无文章</div>'; return; }
+  el.innerHTML = '';
+  items.forEach(item => {
+    const key = storeItem(item);
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `
       <div class="item-info">
-        <div class="item-name">${w.title||'无标题'}</div>
-        <div class="item-meta">${w.date||''} · ${w.featured?'置顶 · ':''} ${w._filename}</div>
+        <div class="item-name">${item.title||'无标题'}</div>
+        <div class="item-meta">${item.date||''} · ${item.featured?'置顶 · ':''}${item._filename}</div>
       </div>
       <div class="item-actions">
-        <button class="btn btn-danger" onclick="deleteItem('_writings','${w._filename}','${w._sha}',loadWritings)">删除</button>
-      </div>
-    </div>`).join('');
+        <button class="btn-sm-edit" data-key="${key}" data-type="writing">编辑</button>
+        <button class="btn-sm-danger" data-path="${item._path}" data-sha="${item._sha}" data-reload="writings">删除</button>
+      </div>`;
+    el.appendChild(div);
+  });
+  bindButtons();
 }
 
 async function saveWriting() {
   const title = document.getElementById('w-title').value.trim();
-  const date = document.getElementById('w-date').value.trim();
-  const excerpt = document.getElementById('w-excerpt').value.trim();
-  const featured = document.getElementById('w-featured').value === 'true';
   if (!title) return showToast('标题不能为空', 'error');
-  const btn = document.getElementById('w-save-btn');
-  btn.disabled = true;
-  showToast('发布中…', 'loading');
+  const btn = document.getElementById('w-btn'); btn.disabled = true;
+  const editing = currentEditing.writing;
+  showToast(editing ? '更新中…' : '发布中…', 'loading');
   try {
-    const content = makeFM({ date, title, excerpt, featured });
-    await createFile(`_writings/${nowSlug()}.md`, content);
-    document.getElementById('w-title').value = '';
-    document.getElementById('w-date').value = '';
-    document.getElementById('w-excerpt').value = '';
-    document.getElementById('new-writing').style.display = 'none';
-    showToast('✓ 发布成功，约1分钟后网站更新', 'success');
-    loadWritings();
-  } catch(e) { showToast('发布失败，请重试', 'error'); }
+    const content = makeFM({ date: document.getElementById('w-date').value.trim(), title, excerpt: document.getElementById('w-excerpt').value.trim(), featured: document.getElementById('w-featured').value === 'true' });
+    if (editing) await updateFile(editing._path, editing._sha, content);
+    else await createFile(`_writings/${nowSlug()}.md`, content);
+    showToast('✓ 成功，约1分钟后网站更新', 'success');
+    closeForm('writing'); loadWritings();
+  } catch(e) { showToast('操作失败，请重试', 'error'); }
   btn.disabled = false;
 }
 
 // ── CHARACTERS ──
 async function loadCharacters() {
   const el = document.getElementById('characters-list');
-  el.innerHTML = '<div class="loading-text">加载中…</div>';
+  el.innerHTML = '<div class="empty">加载中…</div>';
   const items = await getFolder('_characters');
-  if (!items.length) { el.innerHTML = '<div class="loading-text">暂无人物</div>'; return; }
-  el.innerHTML = items.map(c => `
-    <div class="item-row">
+  if (!items.length) { el.innerHTML = '<div class="empty">暂无人物</div>'; return; }
+  el.innerHTML = '';
+  items.forEach(item => {
+    const key = storeItem(item);
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `
       <div class="item-info">
-        <div class="item-name">${c.name||''} · ${c.nameEn||''}</div>
-        <div class="item-meta">${c.tag||''} · ${c._filename}</div>
+        <div class="item-name">${item.name||''} · ${item.nameEn||''}</div>
+        <div class="item-meta">${item.tag||''} · ${item._filename}</div>
       </div>
       <div class="item-actions">
-        <button class="btn btn-danger" onclick="deleteItem('_characters','${c._filename}','${c._sha}',loadCharacters)">删除</button>
-      </div>
-    </div>`).join('');
+        <button class="btn-sm-edit" data-key="${key}" data-type="character">编辑</button>
+        <button class="btn-sm-danger" data-path="${item._path}" data-sha="${item._sha}" data-reload="characters">删除</button>
+      </div>`;
+    el.appendChild(div);
+  });
+  bindButtons();
 }
 
 async function saveCharacter() {
   const name = document.getElementById('c-name').value.trim();
   if (!name) return showToast('名字不能为空', 'error');
-  const btn = document.getElementById('c-save-btn');
-  btn.disabled = true;
-  showToast('发布中…', 'loading');
+  const btn = document.getElementById('c-btn'); btn.disabled = true;
+  const editing = currentEditing.character;
+  showToast(editing ? '更新中…' : '发布中…', 'loading');
   try {
-    const content = makeFM({
-      name,
-      nameEn: document.getElementById('c-nameEn').value.trim(),
-      number: document.getElementById('c-number').value.trim(),
-      tag: document.getElementById('c-tag').value.trim(),
-      desc: document.getElementById('c-desc').value.trim(),
-      note: document.getElementById('c-note').value.trim(),
-      style: document.getElementById('c-style').value
-    });
-    await createFile(`_characters/${nowSlug()}.md`, content);
-    document.getElementById('new-character').style.display = 'none';
-    showToast('✓ 发布成功，约1分钟后网站更新', 'success');
-    loadCharacters();
-  } catch(e) { showToast('发布失败，请重试', 'error'); }
+    const content = makeFM({ name, nameEn: document.getElementById('c-nameEn').value.trim(), number: document.getElementById('c-number').value.trim(), tag: document.getElementById('c-tag').value.trim(), desc: document.getElementById('c-desc').value.trim(), note: document.getElementById('c-note').value.trim(), style: document.getElementById('c-style').value });
+    if (editing) await updateFile(editing._path, editing._sha, content);
+    else await createFile(`_characters/${nowSlug()}.md`, content);
+    showToast('✓ 成功，约1分钟后网站更新', 'success');
+    closeForm('character'); loadCharacters();
+  } catch(e) { showToast('操作失败，请重试', 'error'); }
   btn.disabled = false;
 }
 
-// ── DELETE ──
-async function deleteItem(folder, filename, sha, reloadFn) {
-  if (!confirm(`确定删除 ${filename}？`)) return;
-  showToast('删除中…', 'loading');
-  try {
-    await deleteFile(`${folder}/${filename}`, sha);
-    showToast('✓ 已删除', 'success');
-    reloadFn();
-  } catch(e) { showToast('删除失败', 'error'); }
+// ── BIND BUTTONS ──
+function bindButtons() {
+  document.querySelectorAll('.btn-sm-edit').forEach(btn => {
+    btn.onclick = () => openEditForm(btn.dataset.type, btn.dataset.key);
+  });
+  document.querySelectorAll('.btn-sm-danger').forEach(btn => {
+    btn.onclick = async () => {
+      if (!confirm('确定删除？')) return;
+      showToast('删除中…', 'loading');
+      try {
+        await deleteFile(btn.dataset.path, btn.dataset.sha);
+        showToast('✓ 已删除', 'success');
+        if (btn.dataset.reload === 'thoughts') loadThoughts();
+        else if (btn.dataset.reload === 'writings') loadWritings();
+        else loadCharacters();
+      } catch(e) { showToast('删除失败', 'error'); }
+    };
+  });
 }
 
 // ── TOAST ──
 function showToast(msg, type) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast ${type} show`;
+  t.textContent = msg; t.className = `toast ${type} show`;
   if (type !== 'loading') setTimeout(() => t.className = 'toast', 3000);
 }
 
 // ── AUTO LOGIN ──
 window.onload = () => {
   const saved = localStorage.getItem('mc_edit_token');
-  if (saved) {
-    document.getElementById('token-input').value = saved;
-    login();
-  }
+  if (saved) { document.getElementById('token-input').value = saved; login(); }
 };
 </script>
 </body>
