@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记忆回廊 · 文字</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5efe4;--bg2:#ede5d6;--ink:#2a2118;--ink-lt:#5a4e40;--mist:#9a8e7e;
+    --terra:#b85c38;--sage:#5a7a5e;--gold:#a07830;--dusty:#8a5a7a;--sky:#4a7090;
+    --m:clamp(1.5rem,5vw,4rem);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:'Noto Serif SC',serif;min-height:100vh;}
+
+  /* ── TOPBAR ── */
+  .topbar{padding:1.2rem var(--m);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(42,33,24,0.08);background:var(--bg);position:sticky;top:0;z-index:50;}
+  .topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--sage),var(--dusty),var(--gold));}
+  .back-link{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.9rem;color:var(--mist);text-decoration:none;transition:color 0.2s;}
+  .back-link:hover{color:var(--terra);}
+  .theme-picker{display:flex;gap:0.5rem;align-items:center;}
+  .theme-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mist);margin-right:0.3rem;}
+  .theme-btn{width:24px;height:24px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform 0.2s,border-color 0.2s;font-size:0.7rem;display:flex;align-items:center;justify-content:center;}
+  .theme-btn:hover{transform:scale(1.2);}
+  .theme-btn.active{border-color:var(--ink);}
+
+  /* ── ARTICLE WRAPPER ── */
+  .article-outer{max-width:720px;margin:4rem auto;padding:0 var(--m) 6rem;}
+
+  /* ── PAPER ── */
+  .paper{position:relative;padding:4rem 4rem 5rem;min-height:60vh;}
+
+  /* ── THEMES ── */
+  /* 晴 sunny */
+  .theme-sunny .paper{background:#faf6ee;}
+  .theme-sunny .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:repeating-linear-gradient(transparent,transparent 27px,rgba(160,120,48,0.12) 27px,rgba(160,120,48,0.12) 28px);
+    background-position:0 48px;}
+  .theme-sunny .paper::after{content:'';position:absolute;left:80px;top:0;bottom:0;width:1px;background:rgba(184,92,56,0.15);pointer-events:none;}
+
+  /* 雨 rain */
+  .theme-rain .paper{background:#eef2f5;}
+  .theme-rain .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:repeating-linear-gradient(170deg,transparent,transparent 18px,rgba(74,112,144,0.08) 18px,rgba(74,112,144,0.08) 19px);}
+
+  /* 春 spring */
+  .theme-spring .paper{background:#f2f7f2;}
+  .theme-spring .paper::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:0.5;
+    background-image:radial-gradient(ellipse 8px 12px at 15% 20%,rgba(90,122,94,0.12) 0%,transparent 100%),
+    radial-gradient(ellipse 10px 8px at 80% 35%,rgba(138,90,122,0.1) 0%,transparent 100%),
+    radial-gradient(ellipse 6px 10px at 45% 65%,rgba(90,122,94,0.1) 0%,transparent 100%),
+    radial-gradient(ellipse 12px 7px at 70% 80%,rgba(160,120,48,0.08) 0%,transparent 100%),
+    radial-gradient(ellipse 8px 14px at 25% 85%,rgba(90,122,94,0.1) 0%,transparent 100%),
+    radial-gradient(ellipse 9px 6px at 90% 15%,rgba(138,90,122,0.08) 0%,transparent 100%);}
+
+  /* 秋 autumn */
+  .theme-autumn .paper{background:#f7f0e6;}
+  .theme-autumn .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:repeating-linear-gradient(transparent,transparent 35px,rgba(160,120,48,0.1) 35px,rgba(160,120,48,0.1) 36px),
+    repeating-linear-gradient(90deg,transparent,transparent 35px,rgba(184,92,56,0.04) 35px,rgba(184,92,56,0.04) 36px);}
+
+  /* 夜 night */
+  .theme-night .paper{background:#1c1a2e;color:#d4cfc8;}
+  .theme-night .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(circle 1px at 20% 15%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(circle 1px at 75% 25%,rgba(255,255,255,0.3) 0%,transparent 100%),
+    radial-gradient(circle 1px at 40% 40%,rgba(255,255,255,0.35) 0%,transparent 100%),
+    radial-gradient(circle 1px at 85% 60%,rgba(255,255,255,0.25) 0%,transparent 100%),
+    radial-gradient(circle 1px at 10% 70%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(circle 1px at 55% 80%,rgba(255,255,255,0.3) 0%,transparent 100%),
+    radial-gradient(circle 1.5px at 30% 90%,rgba(255,255,255,0.35) 0%,transparent 100%),
+    radial-gradient(circle 1px at 92% 88%,rgba(255,255,255,0.25) 0%,transparent 100%),
+    radial-gradient(circle 1px at 65% 12%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(circle 1px at 5% 45%,rgba(255,255,255,0.3) 0%,transparent 100%);}
+  .theme-night .article-title{color:#e8e0d4;}
+  .theme-night .article-date{color:rgba(212,207,200,0.5);}
+  .theme-night .article-body{color:#ccc5bc;}
+  .theme-night .article-body h1,.theme-night .article-body h2,.theme-night .article-body h3{color:#e8e0d4;}
+
+  /* 雪 snow */
+  .theme-snow .paper{background:#f4f7fc;}
+  .theme-snow .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:
+    radial-gradient(circle 2px at 12% 20%,rgba(74,112,144,0.15) 0%,transparent 100%),
+    radial-gradient(circle 3px at 88% 10%,rgba(74,112,144,0.1) 0%,transparent 100%),
+    radial-gradient(circle 2px at 45% 30%,rgba(74,112,144,0.12) 0%,transparent 100%),
+    radial-gradient(circle 4px at 70% 55%,rgba(74,112,144,0.08) 0%,transparent 100%),
+    radial-gradient(circle 2px at 25% 65%,rgba(74,112,144,0.15) 0%,transparent 100%),
+    radial-gradient(circle 3px at 60% 75%,rgba(74,112,144,0.1) 0%,transparent 100%),
+    radial-gradient(circle 2px at 92% 80%,rgba(74,112,144,0.12) 0%,transparent 100%),
+    radial-gradient(circle 3px at 8% 88%,rgba(74,112,144,0.08) 0%,transparent 100%),
+    repeating-linear-gradient(transparent,transparent 31px,rgba(74,112,144,0.06) 31px,rgba(74,112,144,0.06) 32px);}
+
+  /* ── ARTICLE CONTENT ── */
+  .article-date{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;}
+  .article-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.2;margin-bottom:2.5rem;color:var(--ink);}
+  .article-divider{height:1px;background:linear-gradient(90deg,var(--terra),transparent);margin-bottom:2.5rem;opacity:0.4;}
+
+  .article-body{font-family:'Noto Serif SC',serif;font-size:1rem;line-height:2;color:var(--ink-lt);}
+  .article-body p{margin-bottom:1.5em;}
+  .article-body h1{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin:2em 0 0.8em;color:var(--ink);}
+  .article-body h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin:1.8em 0 0.7em;color:var(--ink);}
+  .article-body h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;margin:1.5em 0 0.6em;color:var(--ink);}
+  .article-body blockquote{border-left:3px solid var(--terra);padding:0.5em 1.5em;margin:1.5em 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--mist);}
+  .article-body hr{border:none;height:1px;background:rgba(42,33,24,0.12);margin:2em 0;}
+  .article-body strong{font-weight:600;color:var(--ink);}
+  .article-body em{font-style:italic;color:var(--terra);}
+  .article-body img{max-width:100%;margin:1.5em 0;}
+
+  /* ── LOADING ── */
+  .loading{padding:6rem 2rem;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--mist);font-size:1.2rem;}
+</style>
+</head>
+<body class="theme-sunny">
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← 回到回廊</a>
+  <div class="theme-picker">
+    <span class="theme-label">心情</span>
+    <button class="theme-btn active" style="background:#faf6ee;border-color:#a07830" onclick="setTheme('sunny',this)" title="晴">☀</button>
+    <button class="theme-btn" style="background:#eef2f5" onclick="setTheme('rain',this)" title="雨">🌧</button>
+    <button class="theme-btn" style="background:#f2f7f2" onclick="setTheme('spring',this)" title="春">🌸</button>
+    <button class="theme-btn" style="background:#f7f0e6" onclick="setTheme('autumn',this)" title="秋">🍂</button>
+    <button class="theme-btn" style="background:#1c1a2e" onclick="setTheme('night',this)" title="夜">🌙</button>
+    <button class="theme-btn" style="background:#f4f7fc" onclick="setTheme('snow',this)" title="雪">❄</button>
+  </div>
+</div>
+
+<div class="article-outer">
+  <div class="paper" id="paper">
+    <div class="loading" id="loading">正在打开…</div>
+    <div id="article-content" style="display:none">
+      <div class="article-date" id="art-date"></div>
+      <h1 class="article-title" id="art-title"></h1>
+      <div class="article-divider"></div>
+      <div class="article-body" id="art-body"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const REPO = 'lilith2025-pixel/memory-corridor';
+
+function setTheme(name, btn) {
+  document.body.className = 'theme-' + name;
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('mc_article_theme', name);
+}
+
+// Restore saved theme
+const savedTheme = localStorage.getItem('mc_article_theme');
+if (savedTheme) {
+  const btn = document.querySelector(`[title="${{sunny:'晴',rain:'雨',spring:'春',autumn:'秋',night:'夜',snow:'雪'}[savedTheme]}"]`);
+  if (btn) setTheme(savedTheme, btn);
+}
+
+function parseFM(text) {
+  const m = text.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!m) return { _body: text };
+  const obj = { _body: m[2].trim() };
+  m[1].split('\n').forEach(line => {
+    const i = line.indexOf(':');
+    if (i < 0) return;
+    const key = line.slice(0, i).trim();
+    let val = line.slice(i+1).trim().replace(/^["']|["']$/g, '');
+    if (val === 'true') val = true;
+    else if (val === 'false') val = false;
+    obj[key] = val;
+  });
+  return obj;
+}
+
+async function loadArticle() {
+  const params = new URLSearchParams(location.search);
+  const filename = params.get('f');
+  if (!filename) { document.getElementById('loading').textContent = '找不到文章'; return; }
+
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/_writings/${filename}`);
+    if (!r.ok) throw new Error();
+    const data = await r.json();
+    const text = atob(data.content.replace(/\n/g,''));
+    const decoded = decodeURIComponent(escape(text));
+    const article = parseFM(decoded);
+
+    document.title = (article.title || '文章') + ' · 记忆回廊';
+    document.getElementById('art-date').textContent = article.date || '';
+    document.getElementById('art-title').textContent = article.title || '';
+
+    const bodyEl = document.getElementById('art-body');
+    if (article._body) {
+      // If body looks like HTML, render directly; otherwise wrap in paragraphs
+      if (article._body.trim().startsWith('<')) {
+        bodyEl.innerHTML = article._body;
+      } else {
+        bodyEl.innerHTML = article._body.split('\n\n').map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+      }
+    } else {
+      bodyEl.innerHTML = '<p style="color:var(--mist);font-style:italic">这篇文章还没有正文。</p>';
+    }
+
+    // Apply article's saved theme if any
+    if (article.theme) {
+      const themeMap = {sunny:'晴',rain:'雨',spring:'春',autumn:'秋',night:'夜',snow:'雪'};
+      const btn = document.querySelector(`[title="${themeMap[article.theme]}"]`);
+      if (btn && !savedTheme) setTheme(article.theme, btn);
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('article-content').style.display = 'block';
+  } catch(e) {
+    document.getElementById('loading').textContent = '加载失败，请返回重试。';
+  }
+}
+
+loadArticle();
+</script>
+</body>
+</html>
