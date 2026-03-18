@@ -161,12 +161,13 @@ function parseFM(text) {
 function mdToHtml(md) {
   if (!md) return '';
   let html = md;
+  // h3 before h2 (longer match first)
+  html = html.replace(/^###\s*(.+)$/gm, '<h3>$1</h3>');
   // h2
-  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  // h3
-  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-  // blockquote
-  html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+  html = html.replace(/^##\s*(.+)$/gm, '<h2>$1</h2>');
+  // blockquote (consecutive lines merged)
+  html = html.replace(/^>\s*(.+)$/gm, '<blockquote>$1</blockquote>');
+  html = html.replace(/<\/blockquote>\n<blockquote>/g, '<br>');
   // bold
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   // italic
@@ -176,9 +177,9 @@ function mdToHtml(md) {
   // links
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--terra);text-decoration:underline;">$1</a>');
   // hr
-  html = html.replace(/^---$/gm, '<hr>');
+  html = html.replace(/^-{3,}$/gm, '<hr>');
   // ul
-  html = html.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/^[*-]\s+(.+)$/gm, '<li>$1</li>');
   html = html.replace(/((?:<li>.+<\/li>\n?)+)/g, '<ul>$1</ul>');
   // paragraphs — split by double newline
   html = html.split('\n\n').map(block => {
