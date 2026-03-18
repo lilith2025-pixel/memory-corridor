@@ -43,15 +43,17 @@
   .hero-title { font-family:'Playfair Display',serif; font-size:clamp(4.5rem,10vw,9rem); font-weight:900; line-height:0.88; letter-spacing:-0.03em; color:var(--ink); }
   .hero-title .accent { font-style:italic; color:var(--terra); display:block; }
   .hero-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1rem,2vw,1.3rem); color:var(--mist); line-height:1.85; max-width:36ch; border-left:2px solid var(--gold-lt); padding-left:1.2rem; }
-  .hero-nav { display:flex; flex-direction:column; gap:0.5rem; padding-bottom:2.5rem; }
-  .hero-nav a { text-decoration:none; display:flex; align-items:center; gap:0.9rem; font-family:'Cormorant Garamond',serif; font-size:0.85rem; letter-spacing:0.15em; color:var(--ink-lt); transition:color 0.3s,gap 0.3s; }
-  .nav-pip { width:20px; height:2px; flex-shrink:0; transition:width 0.3s; }
-  .hero-nav a:nth-child(1) .nav-pip { background:var(--terra); }
-  .hero-nav a:nth-child(2) .nav-pip { background:var(--sage); }
-  .hero-nav a:nth-child(3) .nav-pip { background:var(--gold); }
-  .hero-nav a:nth-child(4) .nav-pip { background:var(--dusty); }
+
+  /* ── HERO NAV — horizontal ── */
+  .hero-nav { display:flex; flex-direction:row; gap:2.5rem; padding-bottom:2.5rem; flex-wrap:wrap; }
+  .hero-nav a { text-decoration:none; font-family:'Cormorant Garamond',serif; font-size:0.85rem; letter-spacing:0.15em; color:var(--mist); transition:color 0.3s; padding-bottom:4px; border-bottom:1.5px solid transparent; }
+  .hero-nav a:nth-child(1) { color:var(--ink-lt); border-bottom-color:var(--terra); }
   .hero-nav a:hover { color:var(--ink); }
-  .hero-nav a:hover .nav-pip { width:36px; }
+  .hero-nav a:nth-child(1):hover { border-bottom-color:var(--terra); }
+  .hero-nav a:nth-child(2):hover { border-bottom-color:var(--sage); }
+  .hero-nav a:nth-child(3):hover { border-bottom-color:var(--gold); }
+  .hero-nav a:nth-child(4):hover { border-bottom-color:var(--dusty); }
+
   .hero-right { position:relative; overflow:hidden; background:var(--bg2); }
   .hero-right::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 65% 55% at 25% 25%,rgba(184,92,56,0.28) 0%,transparent 60%), radial-gradient(ellipse 55% 65% at 75% 65%,rgba(90,122,94,0.22) 0%,transparent 60%), radial-gradient(ellipse 50% 45% at 55% 90%,rgba(138,90,122,0.2) 0%,transparent 55%), radial-gradient(ellipse 40% 40% at 85% 15%,rgba(160,120,48,0.2) 0%,transparent 50%), radial-gradient(ellipse 35% 35% at 10% 80%,rgba(74,112,144,0.18) 0%,transparent 50%); }
   .hero-ghost { position:absolute; font-family:'Playfair Display',serif; font-style:italic; font-weight:900; font-size:clamp(7rem,16vw,16rem); line-height:1; color:rgba(42,33,24,0.07); top:50%; left:50%; transform:translate(-50%,-50%); user-select:none; pointer-events:none; white-space:nowrap; letter-spacing:0.05em; }
@@ -63,6 +65,12 @@
   .sec { padding:clamp(5rem,10vh,8rem) var(--m); position:relative; }
   .sec-label { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.8rem; letter-spacing:0.3em; text-transform:uppercase; margin-bottom:3rem; display:flex; align-items:center; gap:1rem; color:var(--mist); }
   .sec-label::after { content:''; height:1px; width:4rem; background:currentColor; opacity:0.3; }
+  /* ── clickable section label → back to top ── */
+  .sec-label a { color:inherit; text-decoration:none; transition:color 0.2s; }
+  #writings .sec-label a:hover { color:var(--terra); }
+  #characters .sec-label a:hover { color:var(--sage); }
+  #thoughts .sec-label a:hover { color:var(--gold); }
+  #archive .sec-label a:hover { color:var(--dusty); }
 
   /* WRITINGS */
   #writings { background:var(--bg); }
@@ -108,17 +116,15 @@
   .char-desc { font-size:0.9rem; color:var(--ink-lt); line-height:1.9; }
   .char-note { margin-top:1.5rem; padding-top:1.2rem; border-top:1px solid rgba(42,33,24,0.08); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.85rem; color:var(--mist); }
 
-  /* THOUGHTS */
+  /* ── THOUGHTS — new layout: dot + text + date ── */
   #thoughts { background:var(--bg3); }
-  .thoughts-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:900px; }
-  .thought { padding:2rem 2rem 1.5rem; background:rgba(245,239,228,0.7); border:1px solid rgba(42,33,24,0.07); position:relative; }
-  .thought-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.05rem,2vw,1.25rem); line-height:1.85; color:var(--ink); }
-  .thought:nth-child(1) em{color:var(--terra);}
-  .thought:nth-child(2) em{color:var(--sage);}
-  .thought:nth-child(3) em{color:var(--gold);}
-  .thought:nth-child(4) em{color:var(--dusty);}
-  .thought:nth-child(5) em{color:var(--sky);}
-  .thought-date { margin-top:1rem; font-size:0.65rem; letter-spacing:0.2em; color:var(--mist); text-transform:uppercase; }
+  .thoughts-list { max-width:680px; padding-left:0.8rem; }
+  .thought-item { position:relative; padding-left:1.2rem; margin-bottom:2rem; }
+  .thought-item:last-child { margin-bottom:0; }
+  .thought-dot { position:absolute; left:0; top:0.6em; width:4px; height:4px; border-radius:50%; }
+  .thought-text { font-size:1rem; color:var(--ink); line-height:1.9; }
+  .thought-text em { font-style:italic; }
+  .thought-date { margin-top:0.5rem; font-size:0.65rem; letter-spacing:0.15em; color:var(--mist); font-family:'Cormorant Garamond',serif; font-style:italic; }
 
   /* ARCHIVE */
   #archive { background:var(--bg); }
@@ -151,7 +157,8 @@
   @media(max-width:680px){
     #hero{grid-template-columns:1fr}
     .hero-right{height:38vh}
-    .writings-grid,.chars-wrap,.thoughts-grid{grid-template-columns:1fr}
+    .hero-nav{gap:1.5rem;}
+    .writings-grid,.chars-wrap{grid-template-columns:1fr}
     .writings-grid .w-feat{grid-column:1}
     footer{grid-template-columns:1fr;text-align:center}
     .footer-meta{text-align:center}
@@ -168,10 +175,10 @@
       <p class="hero-sub" style="margin-top:2rem">一些发生过的事情，一些还没有发生的人，一些想清楚了的和没有想清楚的。</p>
     </div>
     <nav class="hero-nav">
-      <a href="#writings"><span class="nav-pip"></span>文字 · Writings</a>
-      <a href="#characters"><span class="nav-pip"></span>人物 · Characters</a>
-      <a href="#thoughts"><span class="nav-pip"></span>碎想 · Fragments</a>
-      <a href="#archive"><span class="nav-pip"></span>影像 · Archive</a>
+      <a href="#writings">文字 · Writings</a>
+      <a href="#characters">人物 · Characters</a>
+      <a href="#thoughts">碎想 · Fragments</a>
+      <a href="#archive">影像 · Archive</a>
     </nav>
   </div>
   <div class="hero-right">
@@ -182,22 +189,22 @@
 </section>
 
 <section class="sec" id="writings">
-  <div class="sec-label">文字 · Writings</div>
+  <div class="sec-label"><a href="#hero">文字 · Writings</a></div>
   <div class="writings-grid" id="writings-container"></div>
 </section>
 
 <section class="sec" id="characters">
-  <div class="sec-label">人物 · Characters</div>
+  <div class="sec-label"><a href="#hero">人物 · Characters</a></div>
   <div class="chars-wrap" id="characters-container"></div>
 </section>
 
 <section class="sec" id="thoughts">
-  <div class="sec-label">碎想 · Fragments</div>
-  <div class="thoughts-grid" id="thoughts-container"></div>
+  <div class="sec-label"><a href="#hero">碎想 · Fragments</a></div>
+  <div class="thoughts-list" id="thoughts-container"></div>
 </section>
 
 <section class="sec" id="archive">
-  <div class="sec-label">影像 · Archive</div>
+  <div class="sec-label"><a href="#hero">影像 · Archive</a></div>
   <div class="archive-mosaic">
     <div class="a-cell"><div class="a-label">Brisbane<br>2024.10</div></div>
     <div class="a-cell"><div class="a-label">某个夜市</div></div>
@@ -289,13 +296,19 @@ async function init() {
     });
   }
 
+  // ── THOUGHTS — new dot + text + date layout ──
   const tc = document.getElementById('thoughts-container');
   if (!thoughts.length) {
     tc.innerHTML = '<div style="padding:2rem;color:var(--mist);font-family:\'Cormorant Garamond\',serif;font-style:italic">暂无碎想</div>';
   } else {
     tc.innerHTML = '';
     thoughts.forEach((t,i) => {
-      tc.innerHTML += `<div class="thought" style="border-left:3px solid ${thoughtColors[i%thoughtColors.length]}"><p class="thought-text">${t.text||''}</p><div class="thought-date">${t.date||''}</div></div>`;
+      const dotColor = thoughtColors[i % thoughtColors.length];
+      tc.innerHTML += `<div class="thought-item">
+        <span class="thought-dot" style="background:${dotColor}"></span>
+        <p class="thought-text">${t.text||''}</p>
+        <div class="thought-date">${t.date||''}</div>
+      </div>`;
     });
   }
 }
