@@ -31,76 +31,98 @@
   .article-outer{max-width:720px;margin:4rem auto;padding:0 var(--m) 6rem;}
 
   /* ── PAPER ── */
-  .paper{position:relative;padding:4rem 4rem 5rem;min-height:60vh;}
+  .paper{position:relative;padding:4rem 4rem 5rem;min-height:60vh;overflow:hidden;
+    box-shadow:0 1px 1px rgba(0,0,0,0.04),0 2px 4px rgba(0,0,0,0.035),0 4px 8px rgba(0,0,0,0.03),0 8px 20px rgba(0,0,0,0.025),3px 5px 12px rgba(0,0,0,0.02),-2px 3px 8px rgba(0,0,0,0.015);}
+  .paper-edge{position:absolute;inset:0;pointer-events:none;z-index:1;}
+  .paper-grain{position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:multiply;}
+  .paper::after{content:'';position:absolute;bottom:0;right:0;width:60px;height:60px;pointer-events:none;z-index:3;background:linear-gradient(135deg,transparent 55%,rgba(0,0,0,0.015) 70%,rgba(0,0,0,0.03) 100%);}
+  .paper-extra{position:absolute;inset:0;pointer-events:none;z-index:3;}
+  .deco{position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden;}
+  .deco svg{position:absolute;}
+  .deco-blur{filter:blur(3px);}
+  #article-content,.loading{position:relative;z-index:10;}
+
+  /* Theme deco visibility */
+  .deco-sunny,.deco-rain,.deco-spring,.deco-autumn,.deco-night,.deco-snow{display:none;}
+  .theme-sunny .deco-sunny,.theme-rain .deco-rain,.theme-spring .deco-spring,
+  .theme-autumn .deco-autumn,.theme-night .deco-night,.theme-snow .deco-snow{display:block;}
 
   /* ── THEMES ── */
-  /* 晴 sunny */
-  .theme-sunny .paper{background:#faf6ee;}
-  .theme-sunny .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
-    background-image:repeating-linear-gradient(transparent,transparent 27px,rgba(160,120,48,0.12) 27px,rgba(160,120,48,0.12) 28px);
-    background-position:0 48px;}
-  .theme-sunny .paper::after{content:'';position:absolute;left:80px;top:0;bottom:0;width:1px;background:rgba(184,92,56,0.15);pointer-events:none;}
 
-  /* 雨 rain */
-  .theme-rain .paper{background:#eef2f5;}
-  .theme-rain .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
-    background-image:repeating-linear-gradient(170deg,transparent,transparent 18px,rgba(74,112,144,0.08) 18px,rgba(74,112,144,0.08) 19px);}
+  /* ☀ 晴 sunny */
+  .theme-sunny .paper{background:linear-gradient(175deg,#fdf8ee 0%,#f7f0e0 45%,#f3ebd7 100%);}
+  .theme-sunny .paper-edge{box-shadow:inset 0 0 50px rgba(140,100,40,0.05),inset 0 0 100px rgba(100,70,20,0.02);}
+  .theme-sunny .paper-grain{opacity:0.2;filter:url(#grain);}
+  .theme-sunny .paper-extra{background-image:repeating-linear-gradient(transparent,transparent 28px,rgba(160,120,48,0.04) 28px,rgba(160,120,48,0.04) 28.5px);background-position:0 50px;}
+  .theme-sunny .article-date{color:#b8a888;}
+  .theme-sunny .article-title{color:#3a2e22;}
+  .theme-sunny .article-divider{background:linear-gradient(90deg,#a07830,transparent);}
+  .theme-sunny .article-body{color:#4a3e30;}
+  .theme-sunny .article-body p:first-of-type::first-letter{color:#a07830;}
 
-  /* 春 spring */
-  .theme-spring .paper{background:#f2f7f2;}
-  .theme-spring .paper::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:0.5;
-    background-image:radial-gradient(ellipse 8px 12px at 15% 20%,rgba(90,122,94,0.12) 0%,transparent 100%),
-    radial-gradient(ellipse 10px 8px at 80% 35%,rgba(138,90,122,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 6px 10px at 45% 65%,rgba(90,122,94,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 12px 7px at 70% 80%,rgba(160,120,48,0.08) 0%,transparent 100%),
-    radial-gradient(ellipse 8px 14px at 25% 85%,rgba(90,122,94,0.1) 0%,transparent 100%),
-    radial-gradient(ellipse 9px 6px at 90% 15%,rgba(138,90,122,0.08) 0%,transparent 100%);}
+  /* 🌧 雨 rain */
+  .theme-rain .paper{background:radial-gradient(ellipse 130% 80% at 25% 15%,rgba(74,112,144,0.045) 0%,transparent 65%),radial-gradient(ellipse 100% 70% at 78% 80%,rgba(74,112,144,0.05) 0%,transparent 65%),linear-gradient(175deg,#eff3f7 0%,#e8edf3 50%,#eaeff5 100%);}
+  .theme-rain .paper-edge{box-shadow:inset 0 0 60px rgba(74,112,144,0.04),inset 0 0 120px rgba(50,70,90,0.015);}
+  .theme-rain .paper-grain{opacity:0.16;filter:url(#grain);}
+  .theme-rain .paper-extra{background:radial-gradient(ellipse 350px 250px at 8% 90%,rgba(74,112,144,0.05) 0%,transparent 70%),radial-gradient(ellipse 300px 400px at 95% 8%,rgba(74,112,144,0.035) 0%,transparent 70%);filter:blur(8px);}
+  .theme-rain .article-date{color:#8aa0b4;}
+  .theme-rain .article-title{color:#2a2e33;}
+  .theme-rain .article-divider{background:linear-gradient(90deg,#4a7090,transparent);}
+  .theme-rain .article-body{color:#3e4650;}
+  .theme-rain .article-body p:first-of-type::first-letter{color:#4a7090;}
 
-  /* 秋 autumn */
-  .theme-autumn .paper{background:#f7f0e6;}
-  .theme-autumn .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
-    background-image:repeating-linear-gradient(transparent,transparent 35px,rgba(160,120,48,0.1) 35px,rgba(160,120,48,0.1) 36px),
-    repeating-linear-gradient(90deg,transparent,transparent 35px,rgba(184,92,56,0.04) 35px,rgba(184,92,56,0.04) 36px);}
+  /* 🌸 春 spring */
+  .theme-spring .paper{background:radial-gradient(ellipse 200px 220px at 10% 15%,rgba(138,90,122,0.03) 0%,transparent 70%),radial-gradient(ellipse 180px 260px at 90% 80%,rgba(90,122,94,0.04) 0%,transparent 70%),linear-gradient(162deg,#f4f8f1 0%,#eef5ec 45%,#f0f6ed 100%);}
+  .theme-spring .paper-edge{box-shadow:inset 0 0 50px rgba(90,122,94,0.035),inset 0 0 90px rgba(60,80,50,0.015);}
+  .theme-spring .paper-grain{opacity:0.14;filter:url(#grain);}
+  .theme-spring .article-date{color:#8aa48c;}
+  .theme-spring .article-title{color:#2e3328;}
+  .theme-spring .article-divider{background:linear-gradient(90deg,#8a5a7a,transparent);}
+  .theme-spring .article-body{color:#3e4438;}
+  .theme-spring .article-body p:first-of-type::first-letter{color:#8a5a7a;}
 
-  /* 夜 night */
-  .theme-night .paper{background:#1c1a2e;color:#d4cfc8;}
-  .theme-night .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(circle 1px at 20% 15%,rgba(255,255,255,0.4) 0%,transparent 100%),
-    radial-gradient(circle 1px at 75% 25%,rgba(255,255,255,0.3) 0%,transparent 100%),
-    radial-gradient(circle 1px at 40% 40%,rgba(255,255,255,0.35) 0%,transparent 100%),
-    radial-gradient(circle 1px at 85% 60%,rgba(255,255,255,0.25) 0%,transparent 100%),
-    radial-gradient(circle 1px at 10% 70%,rgba(255,255,255,0.4) 0%,transparent 100%),
-    radial-gradient(circle 1px at 55% 80%,rgba(255,255,255,0.3) 0%,transparent 100%),
-    radial-gradient(circle 1.5px at 30% 90%,rgba(255,255,255,0.35) 0%,transparent 100%),
-    radial-gradient(circle 1px at 92% 88%,rgba(255,255,255,0.25) 0%,transparent 100%),
-    radial-gradient(circle 1px at 65% 12%,rgba(255,255,255,0.4) 0%,transparent 100%),
-    radial-gradient(circle 1px at 5% 45%,rgba(255,255,255,0.3) 0%,transparent 100%);}
-  .theme-night .article-title{color:#e8e0d4;}
-  .theme-night .article-date{color:rgba(212,207,200,0.5);}
-  .theme-night .article-body{color:#ccc5bc;}
+  /* 🍂 秋 autumn */
+  .theme-autumn .paper{background:radial-gradient(ellipse 220px 200px at 3% 3%,rgba(90,50,10,0.07) 0%,transparent 70%),radial-gradient(ellipse 200px 260px at 97% 97%,rgba(90,50,10,0.08) 0%,transparent 70%),radial-gradient(ellipse 280px 180px at 94% 6%,rgba(80,45,10,0.04) 0%,transparent 70%),linear-gradient(165deg,#f4ebdd 0%,#efe3d0 35%,#ecdcca 70%,#efe2d2 100%);}
+  .theme-autumn .paper-edge{box-shadow:inset 0 0 70px rgba(90,50,10,0.06),inset 0 0 130px rgba(60,30,5,0.025);}
+  .theme-autumn .paper-grain{opacity:0.3;filter:url(#grain);}
+  .theme-autumn .article-date{color:#b89878;}
+  .theme-autumn .article-title{color:#2d231a;}
+  .theme-autumn .article-divider{background:linear-gradient(90deg,#b85c38,transparent);}
+  .theme-autumn .article-body{color:#3e3226;}
+  .theme-autumn .article-body p:first-of-type::first-letter{color:#b85c38;}
+
+  /* 🌙 夜 night */
+  .theme-night .paper{background:radial-gradient(ellipse 55% 45% at 50% 35%,rgba(40,35,65,1) 0%,rgba(22,20,36,1) 100%),linear-gradient(170deg,#1d1a30 0%,#191726 50%,#1b1930 100%);
+    box-shadow:0 1px 2px rgba(0,0,0,0.12),0 3px 6px rgba(0,0,0,0.1),0 6px 16px rgba(0,0,0,0.08),0 12px 32px rgba(0,0,0,0.06),inset 0 0 60px rgba(0,0,0,0.1);}
+  .theme-night .paper-edge{box-shadow:inset 0 0 80px rgba(0,0,0,0.12);}
+  .theme-night .paper-grain{opacity:0.08;filter:url(#grain);mix-blend-mode:screen;}
+  .theme-night .paper-extra{background:radial-gradient(ellipse 55% 50% at 48% 32%,rgba(255,200,120,0.025) 0%,transparent 70%);}
+  .theme-night .paper::after{background:linear-gradient(135deg,transparent 55%,rgba(0,0,0,0.04) 70%,rgba(0,0,0,0.06) 100%);}
+  .theme-night .article-date{color:rgba(200,190,210,0.35);}
+  .theme-night .article-title{color:#e4dcd0;}
+  .theme-night .article-divider{background:linear-gradient(90deg,rgba(180,165,220,0.3),transparent);}
+  .theme-night .article-body{color:#b8b0a6;}
   .theme-night .article-body h1,.theme-night .article-body h2,.theme-night .article-body h3{color:#e8e0d4;}
+  .theme-night .article-body p:first-of-type::first-letter{color:rgba(180,165,220,0.6);}
 
-  /* 雪 snow */
-  .theme-snow .paper{background:#f4f7fc;}
-  .theme-snow .paper::before{content:'';position:absolute;inset:0;pointer-events:none;
-    background-image:
-    radial-gradient(circle 2px at 12% 20%,rgba(74,112,144,0.15) 0%,transparent 100%),
-    radial-gradient(circle 3px at 88% 10%,rgba(74,112,144,0.1) 0%,transparent 100%),
-    radial-gradient(circle 2px at 45% 30%,rgba(74,112,144,0.12) 0%,transparent 100%),
-    radial-gradient(circle 4px at 70% 55%,rgba(74,112,144,0.08) 0%,transparent 100%),
-    radial-gradient(circle 2px at 25% 65%,rgba(74,112,144,0.15) 0%,transparent 100%),
-    radial-gradient(circle 3px at 60% 75%,rgba(74,112,144,0.1) 0%,transparent 100%),
-    radial-gradient(circle 2px at 92% 80%,rgba(74,112,144,0.12) 0%,transparent 100%),
-    radial-gradient(circle 3px at 8% 88%,rgba(74,112,144,0.08) 0%,transparent 100%),
-    repeating-linear-gradient(transparent,transparent 31px,rgba(74,112,144,0.06) 31px,rgba(74,112,144,0.06) 32px);}
+  /* ❄ 雪 snow */
+  .theme-snow .paper{background:radial-gradient(ellipse 200px 200px at 12% 18%,rgba(74,112,144,0.03) 0%,transparent 70%),radial-gradient(ellipse 220px 180px at 85% 75%,rgba(74,112,144,0.04) 0%,transparent 70%),radial-gradient(ellipse 70% 50% at 50% 45%,rgba(248,250,255,0.5) 0%,transparent 70%),linear-gradient(170deg,#f4f7fc 0%,#eef3fa 45%,#f1f5fb 100%);}
+  .theme-snow .paper-edge{box-shadow:inset 0 0 45px rgba(74,112,144,0.025),inset 0 0 90px rgba(50,70,100,0.01);}
+  .theme-snow .paper-grain{opacity:0.1;filter:url(#grain);}
+  .theme-snow .paper-extra{background-image:radial-gradient(circle 1.5px at 8% 12%,rgba(255,255,255,0.7) 0%,transparent 100%),radial-gradient(circle 1px at 22% 28%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(circle 2px at 78% 8%,rgba(255,255,255,0.6) 0%,transparent 100%),radial-gradient(circle 1px at 42% 55%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(circle 1.5px at 90% 42%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(circle 1px at 15% 70%,rgba(255,255,255,0.6) 0%,transparent 100%),radial-gradient(circle 2px at 65% 85%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(circle 1px at 35% 92%,rgba(255,255,255,0.4) 0%,transparent 100%);}
+  .theme-snow .article-date{color:#8aa0b8;}
+  .theme-snow .article-title{color:#2e3540;}
+  .theme-snow .article-divider{background:linear-gradient(90deg,#4a7090,transparent);}
+  .theme-snow .article-body{color:#3a4250;}
+  .theme-snow .article-body p:first-of-type::first-letter{color:#4a7090;}
 
   /* ── ARTICLE CONTENT ── */
   .article-date{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;}
   .article-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.2;margin-bottom:2.5rem;color:var(--ink);}
   .article-divider{height:1px;background:linear-gradient(90deg,var(--terra),transparent);margin-bottom:2.5rem;opacity:0.4;}
-
   .article-body{font-family:'Noto Serif SC',serif;font-size:1rem;line-height:2;color:var(--ink-lt);}
   .article-body p{margin-bottom:1.5em;}
+  .article-body p:first-of-type::first-letter{float:left;font-family:'Playfair Display',serif;font-size:3.4em;line-height:0.78;padding-right:0.06em;margin-top:0.06em;font-weight:900;color:var(--terra);}
   .article-body h1{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin:2em 0 0.8em;color:var(--ink);}
   .article-body h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin:1.8em 0 0.7em;color:var(--ink);}
   .article-body h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;margin:1.5em 0 0.6em;color:var(--ink);}
@@ -115,6 +137,14 @@
 </style>
 </head>
 <body class="theme-sunny">
+
+<!-- SVG noise filter for paper grain -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="n"/>
+    <feColorMatrix type="saturate" values="0" in="n"/>
+  </filter>
+</svg>
 
 <div class="topbar">
   <a href="index.html" class="back-link">← 回到回廊</a>
@@ -131,6 +161,394 @@
 
 <div class="article-outer">
   <div class="paper" id="paper">
+    <div class="paper-edge"></div>
+    <div class="paper-grain"></div>
+    <div class="paper-extra"></div>
+
+    <div class="deco deco-sunny">
+<!-- ★ SUN top-right — VISIBLE, warm gold -->
+      <svg width="110" height="110" viewBox="0 0 110 110" style="top:-14px;right:-14px;">
+        <circle cx="55" cy="55" r="20" fill="#c8962e" opacity="0.35"/>
+        <g stroke="#c8962e" stroke-width="2" stroke-linecap="round" opacity="0.3">
+          <line x1="55" y1="12" x2="55" y2="26"/><line x1="55" y1="84" x2="55" y2="98"/>
+          <line x1="12" y1="55" x2="26" y2="55"/><line x1="84" y1="55" x2="98" y2="55"/>
+          <line x1="24" y1="24" x2="34" y2="34"/><line x1="76" y1="76" x2="86" y2="86"/>
+          <line x1="86" y1="24" x2="76" y2="34"/><line x1="34" y1="76" x2="24" y2="86"/>
+        </g>
+      </svg>
+      <!-- Warm swirl bottom-left — visible -->
+      <svg width="200" height="200" viewBox="0 0 200 200" style="bottom:-50px;left:-50px;">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#c8962e" stroke-width="0.8" opacity="0.12"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="#c8962e" stroke-width="0.6" opacity="0.09"/>
+        <circle cx="100" cy="100" r="42" fill="none" stroke="#c8962e" stroke-width="0.4" opacity="0.06"/>
+      </svg>
+      <!-- Bottom: wheat/grass — visible at bottom edge -->
+      <svg width="100%" height="120" viewBox="0 0 600 120" style="bottom:0;left:0;right:0" preserveAspectRatio="none">
+        <g stroke="#b89850" fill="none" stroke-linecap="round" opacity="0.14">
+          <path d="M40,120 Q42,85 38,50" stroke-width="1"/><path d="M38,60 Q30,52 24,46" stroke-width="0.7"/><path d="M38,70 Q46,62 52,56" stroke-width="0.7"/>
+          <path d="M80,120 Q82,90 78,55" stroke-width="1"/><path d="M78,65 Q70,55 64,48" stroke-width="0.7"/><path d="M78,75 Q86,66 92,58" stroke-width="0.7"/>
+          <path d="M130,120 Q128,88 132,52" stroke-width="1"/><path d="M132,62 Q124,52 118,44" stroke-width="0.7"/><path d="M132,72 Q140,64 146,55" stroke-width="0.7"/>
+          <path d="M540,120 Q538,82 542,48" stroke-width="1"/><path d="M542,58 Q534,48 528,40" stroke-width="0.7"/><path d="M542,68 Q550,60 556,52" stroke-width="0.7"/>
+          <path d="M580,120 Q582,90 578,60" stroke-width="1"/><path d="M578,70 Q570,60 564,52" stroke-width="0.7"/><path d="M578,80 Q586,72 592,64" stroke-width="0.7"/>
+        </g>
+        <!-- Wheat heads -->
+        <g fill="#c8962e" opacity="0.18">
+          <ellipse cx="38" cy="48" rx="2.5" ry="5" transform="rotate(-5,38,48)"/>
+          <ellipse cx="24" cy="44" rx="2" ry="4" transform="rotate(-15,24,44)"/>
+          <ellipse cx="52" cy="54" rx="2" ry="4" transform="rotate(12,52,54)"/>
+          <ellipse cx="78" cy="53" rx="2.5" ry="5" transform="rotate(-3,78,53)"/>
+          <ellipse cx="64" cy="46" rx="2" ry="4" transform="rotate(-12,64,46)"/>
+          <ellipse cx="92" cy="56" rx="2" ry="4" transform="rotate(10,92,56)"/>
+          <ellipse cx="132" cy="50" rx="2.5" ry="5" transform="rotate(2,132,50)"/>
+          <ellipse cx="542" cy="46" rx="2.5" ry="5" transform="rotate(-4,542,46)"/>
+          <ellipse cx="578" cy="58" rx="2.5" ry="5" transform="rotate(-2,578,58)"/>
+        </g>
+      </svg>
+      <!-- Over-text area: tiny warm dots, LOW opacity -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none">
+        <g fill="#c8962e" opacity="0.025">
+          <circle cx="200" cy="180" r="3"/><circle cx="300" cy="300" r="2.5"/><circle cx="100" cy="400" r="3"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="deco deco-rain">
+<!-- ★ Cloud top-right — smooth single shape -->
+      <svg width="150" height="75" viewBox="0 0 150 75" style="top:4px;right:6px;">
+        <path d="M20,58 Q10,58 10,48 Q10,40 18,38 Q16,28 26,24 Q34,20 42,24 Q46,14 58,12 Q70,10 78,18 Q84,10 96,10 Q110,10 114,22 Q122,18 130,24 Q140,30 136,42 Q144,46 142,54 Q140,60 132,60Z" fill="#7a9eb8" opacity="0.22"/>
+        <!-- Inner cloud highlight -->
+        <path d="M40,50 Q34,50 34,42 Q34,36 42,35 Q44,28 54,26 Q62,24 68,30 Q72,24 82,24 Q92,24 94,34 Q100,32 106,36 Q112,40 108,48 Q114,50 112,54 Q110,56 104,56Z" fill="#8aaec4" opacity="0.1"/>
+      </svg>
+      <!-- ★ Rain drops — sharp near, visible -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none">
+        <g fill="#5a8aaa">
+          <!-- Edge drops — MORE visible -->
+          <ellipse cx="28" cy="90" rx="2.2" ry="5.5" opacity="0.18" transform="rotate(8,28,90)"/>
+          <ellipse cx="15" cy="180" rx="2" ry="5" opacity="0.14" transform="rotate(6,15,180)"/>
+          <ellipse cx="380" cy="120" rx="2.2" ry="5.5" opacity="0.16" transform="rotate(10,380,120)"/>
+          <ellipse cx="390" cy="250" rx="2" ry="5" opacity="0.15" transform="rotate(5,390,250)"/>
+          <ellipse cx="25" cy="350" rx="2.2" ry="5.5" opacity="0.16" transform="rotate(9,25,350)"/>
+          <ellipse cx="385" cy="400" rx="2" ry="5" opacity="0.14" transform="rotate(7,385,400)"/>
+          <!-- Over-text drops — LOW opacity -->
+          <ellipse cx="180" cy="160" rx="1.5" ry="3.5" opacity="0.04" transform="rotate(7,180,160)"/>
+          <ellipse cx="250" cy="280" rx="1.5" ry="3.5" opacity="0.035" transform="rotate(8,250,280)"/>
+          <ellipse cx="300" cy="400" rx="1.5" ry="3.5" opacity="0.04" transform="rotate(6,300,400)"/>
+        </g>
+      </svg>
+      <!-- ★ Bottom: puddles & ripples — VISIBLE -->
+      <svg width="100%" height="80" viewBox="0 0 600 80" style="bottom:0;left:0;right:0" preserveAspectRatio="none">
+        <g fill="none" stroke="#5a8aaa" opacity="0.18">
+          <ellipse cx="60" cy="55" rx="40" ry="10" stroke-width="0.8"/>
+          <ellipse cx="60" cy="55" rx="24" ry="6" stroke-width="0.5"/>
+          <ellipse cx="60" cy="55" rx="10" ry="3" stroke-width="0.3"/>
+          <ellipse cx="200" cy="60" rx="35" ry="9" stroke-width="0.7"/>
+          <ellipse cx="200" cy="60" rx="20" ry="5" stroke-width="0.4"/>
+          <ellipse cx="380" cy="50" rx="42" ry="11" stroke-width="0.8"/>
+          <ellipse cx="380" cy="50" rx="26" ry="7" stroke-width="0.5"/>
+          <ellipse cx="380" cy="50" rx="12" ry="3.5" stroke-width="0.3"/>
+          <ellipse cx="530" cy="58" rx="30" ry="8" stroke-width="0.7"/>
+          <ellipse cx="530" cy="58" rx="16" ry="4.5" stroke-width="0.4"/>
+        </g>
+        <!-- Splash dots -->
+        <g fill="#5a8aaa" opacity="0.12">
+          <circle cx="60" cy="42" r="1.5"/><circle cx="55" cy="38" r="1"/><circle cx="66" cy="39" r="0.8"/>
+          <circle cx="380" cy="36" r="1.5"/><circle cx="375" cy="32" r="1"/><circle cx="386" cy="33" r="0.8"/>
+        </g>
+      </svg>
+      <!-- Blurred far drops -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none" class="deco-blur">
+        <g fill="#5a8aaa">
+          <ellipse cx="120" cy="55" rx="3" ry="7" opacity="0.06" transform="rotate(9,120,55)"/>
+          <ellipse cx="310" cy="320" rx="3" ry="7" opacity="0.05" transform="rotate(6,310,320)"/>
+          <ellipse cx="60" cy="450" rx="3" ry="7" opacity="0.05" transform="rotate(11,60,450)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="deco deco-spring">
+<!-- ★ Cherry branch top-right — natural, v3 shape + visible color -->
+      <svg width="180" height="200" viewBox="0 0 180 200" style="top:-12px;right:-12px;">
+        <!-- Branch — organic curve -->
+        <g fill="none" stroke="#6a8a6e" stroke-linecap="round">
+          <path d="M180,0 Q150,40 140,80 Q135,100 130,130" stroke-width="1.4" opacity="0.35"/>
+          <path d="M140,80 Q120,70 110,60" stroke-width="1" opacity="0.3"/>
+          <path d="M135,105 Q155,95 165,85" stroke-width="1" opacity="0.3"/>
+        </g>
+        <!-- Flower 1 (main, at branch joint) — hand-drawn petal paths -->
+        <g transform="translate(140,78)" opacity="0.5">
+          <path d="M0,-2 C-3,-10 -9,-12 -6,-6 C-10,-9 -13,-4 -7,-3 C-13,-1 -12,5 -6,2 C-10,7 -5,11 -2,5 C0,11 6,10 4,4 C9,8 12,3 6,1 C12,-1 11,-7 5,-3 C8,-8 4,-11 1,-5Z" fill="#d48aa0"/>
+          <circle cx="0" cy="0" r="2.5" fill="#f5e8d8"/>
+          <circle cx="-0.5" cy="-0.5" r="1" fill="#c89040" opacity="0.5"/>
+        </g>
+        <!-- Flower 2 (smaller, on sub-branch) -->
+        <g transform="translate(108,58) scale(0.75)" opacity="0.4">
+          <path d="M0,-2 C-4,-11 -10,-11 -6,-5 C-11,-7 -12,-1 -6,-1 C-12,2 -9,8 -4,3 C-7,9 -1,12 0,6 C2,12 8,8 5,3 C10,6 12,0 7,-1 C12,-3 9,-9 4,-4 C7,-10 2,-12 0,-6Z" fill="#d48aa0"/>
+          <circle cx="0" cy="0" r="2.2" fill="#f5e8d8"/>
+          <circle cx="0.3" cy="-0.3" r="0.8" fill="#c89040" opacity="0.5"/>
+        </g>
+        <!-- Flower 3 (on right sub-branch) -->
+        <g transform="translate(166,84) scale(0.7)" opacity="0.45">
+          <path d="M0,-3 C-4,-10 -9,-10 -5,-4 C-10,-6 -11,0 -5,0 C-10,3 -7,9 -3,4 C-5,10 1,11 1,5 C3,10 9,7 6,2 C10,3 10,-3 5,-2 C9,-5 7,-10 2,-5 C4,-11 -1,-12 -1,-6Z" fill="#d48aa0"/>
+          <circle cx="0" cy="0" r="2" fill="#f5e8d8"/>
+        </g>
+        <!-- Bud (unopened, near branch tip) -->
+        <g transform="translate(132,122)" opacity="0.35">
+          <path d="M0,0 C-2,-5 -1,-10 0,-12 C1,-10 2,-5 0,0Z" fill="#d48aa0"/>
+          <path d="M0,0 C-3,-3 -5,-8 -3,-11 C-1,-9 0,-4 0,0Z" fill="#c07888" opacity="0.6"/>
+          <path d="M-1,0 L0,-3 L1,0Z" fill="#5a7a5e" opacity="0.4"/>
+        </g>
+        <!-- A loose falling petal -->
+        <g transform="translate(118,95) rotate(35)" opacity="0.25">
+          <path d="M0,0 C-3,-6 -1,-10 2,-6 C4,-10 3,-4 0,0Z" fill="#d48aa0"/>
+        </g>
+        <!-- Leaves — natural curve -->
+        <g fill="#5a7a5e" opacity="0.3">
+          <path d="M126,130 Q122,118 118,110 Q126,115 130,110 Q128,120 126,130Z"/>
+          <path d="M142,116 Q146,106 148,98 Q142,104 138,100 Q140,108 142,116Z"/>
+        </g>
+      </svg>
+      <!-- ★ Bottom: wildflower meadow — VISIBLE -->
+      <svg width="100%" height="140" viewBox="0 0 600 140" style="bottom:0;left:0;right:0" preserveAspectRatio="none">
+        <!-- Grass blades -->
+        <g stroke="#5a7a5e" stroke-width="0.9" fill="none" stroke-linecap="round" opacity="0.3">
+          <path d="M20,140 Q22,105 18,72"/><path d="M35,140 Q38,108 32,68"/>
+          <path d="M52,140 Q50,115 55,80"/><path d="M70,140 Q72,100 66,65"/>
+          <path d="M88,140 Q86,112 90,78"/><path d="M108,140 Q110,98 105,62"/>
+          <path d="M480,140 Q478,108 482,72"/><path d="M500,140 Q502,95 498,58"/>
+          <path d="M520,140 Q518,110 522,75"/><path d="M545,140 Q547,102 542,65"/>
+          <path d="M565,140 Q563,108 567,72"/><path d="M585,140 Q587,95 583,60"/>
+        </g>
+        <!-- Flowers — visible pink & gold -->
+        <g opacity="0.5">
+          <circle cx="18" cy="70" r="4.5" fill="#d48aa0"/><circle cx="14" cy="65" r="3.2" fill="#d48aa0"/><circle cx="23" cy="65" r="3.2" fill="#d48aa0"/>
+          <circle cx="15" cy="75" r="3" fill="#d48aa0"/><circle cx="22" cy="76" r="3" fill="#d48aa0"/>
+          <circle cx="18" cy="70" r="2" fill="#fff8f0"/>
+        </g>
+        <g opacity="0.4">
+          <circle cx="66" cy="63" r="4" fill="#c89040"/><circle cx="62" cy="58" r="3" fill="#c89040"/><circle cx="71" cy="59" r="3" fill="#c89040"/>
+          <circle cx="66" cy="63" r="1.8" fill="#fff8f0"/>
+        </g>
+        <g opacity="0.45">
+          <circle cx="105" cy="60" r="3.8" fill="#d48aa0"/><circle cx="101" cy="55" r="2.8" fill="#d48aa0"/><circle cx="110" cy="56" r="2.8" fill="#d48aa0"/>
+          <circle cx="105" cy="60" r="1.5" fill="#fff8f0"/>
+        </g>
+        <g opacity="0.45">
+          <circle cx="498" cy="56" r="4.2" fill="#d48aa0"/><circle cx="494" cy="50" r="3" fill="#d48aa0"/><circle cx="503" cy="51" r="3" fill="#d48aa0"/>
+          <circle cx="495" cy="62" r="3" fill="#d48aa0"/><circle cx="503" cy="62" r="3" fill="#d48aa0"/>
+          <circle cx="498" cy="56" r="2" fill="#fff8f0"/>
+        </g>
+        <g opacity="0.35">
+          <circle cx="542" cy="63" r="3.5" fill="#c89040"/><circle cx="538" cy="58" r="2.5" fill="#c89040"/><circle cx="547" cy="59" r="2.5" fill="#c89040"/>
+          <circle cx="542" cy="63" r="1.5" fill="#fff8f0"/>
+        </g>
+        <g opacity="0.4">
+          <circle cx="583" cy="58" r="4" fill="#d48aa0"/><circle cx="579" cy="53" r="3" fill="#d48aa0"/><circle cx="588" cy="54" r="3" fill="#d48aa0"/>
+          <circle cx="583" cy="58" r="1.6" fill="#fff8f0"/>
+        </g>
+        <!-- Tiny buds -->
+        <g fill="#d48aa0" opacity="0.25">
+          <circle cx="42" cy="78" r="2"/><circle cx="86" cy="76" r="1.8"/>
+          <circle cx="510" cy="68" r="1.8"/><circle cx="558" cy="72" r="2"/>
+        </g>
+      </svg>
+      <!-- Floating petals over text — LOW opacity -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none">
+        <g fill="#d48aa0" opacity="0.04">
+          <ellipse cx="220" cy="100" rx="5" ry="2.8" transform="rotate(22,220,100)"/>
+          <ellipse cx="310" cy="260" rx="4.5" ry="2.5" transform="rotate(-15,310,260)"/>
+          <ellipse cx="90" cy="380" rx="4" ry="2.2" transform="rotate(38,90,380)"/>
+        </g>
+        <g fill="#5a7a5e" opacity="0.03">
+          <ellipse cx="280" cy="180" rx="3" ry="7" transform="rotate(30,280,180)"/>
+          <ellipse cx="60" cy="300" rx="2.5" ry="5.5" transform="rotate(-20,60,300)"/>
+        </g>
+      </svg>
+      <!-- Blurred distant petals -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none" class="deco-blur">
+        <g fill="#d48aa0" opacity="0.06">
+          <ellipse cx="350" cy="160" rx="6" ry="3.5" transform="rotate(-25,350,160)"/>
+          <ellipse cx="100" cy="430" rx="5.5" ry="3" transform="rotate(30,100,430)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="deco deco-autumn">
+<!-- ★ Maple leaf top-right — VISIBLE terracotta -->
+      <svg width="72" height="72" viewBox="0 0 60 60" style="top:10px;right:14px;transform:rotate(22deg);">
+        <path d="M30,5 L35,20 L48,12 L40,25 L55,28 L40,33 L48,48 L33,40 L30,55 L27,40 L12,48 L20,33 L5,28 L20,25 L12,12 L25,20 Z" fill="#c06838" opacity="0.4"/>
+      </svg>
+      <!-- ★ Ginkgo leaf top-left — VISIBLE gold -->
+      <svg width="55" height="60" viewBox="0 0 50 55" style="top:50px;left:10px;transform:rotate(-10deg);">
+        <path d="M25,50 Q25,28 10,8 Q25,20 25,4 Q25,20 40,8 Q25,28 25,50Z" fill="#b89030" opacity="0.3"/>
+        <line x1="25" y1="50" x2="25" y2="4" stroke="#9a7820" stroke-width="0.6" opacity="0.25"/>
+      </svg>
+      <!-- ★ Bottom: thick fallen leaves carpet — VISIBLE -->
+      <svg width="100%" height="150" viewBox="0 0 600 150" style="bottom:0;left:0;right:0" preserveAspectRatio="none">
+        <!-- Maple leaves scattered along bottom -->
+        <g opacity="0.3">
+          <path d="M40,115 l3,8 7,-4 -3,6 8,1 -7,3 3,8 -5,-5 -3,8 -2,-8 -8,3 5,-6 -8,-2 7,-3 -3,-7 5,5Z" fill="#c06838" transform="rotate(15,40,115) scale(1.1)"/>
+          <path d="M100,125 l3,8 7,-4 -3,6 8,1 -7,3 3,8 -5,-5 -3,8 -2,-8 -8,3 5,-6 -8,-2 7,-3 -3,-7 5,5Z" fill="#b89030" transform="rotate(-20,100,125) scale(0.9)"/>
+          <path d="M160,118 l3,8 7,-4 -3,6 8,1 -7,3 3,8 -5,-5 -3,8 -2,-8 -8,3 5,-6 -8,-2 7,-3 -3,-7 5,5Z" fill="#c06838" transform="rotate(35,160,118) scale(1)"/>
+        </g>
+        <!-- Ginkgo leaves -->
+        <g opacity="0.25">
+          <path d="M70,130 Q70,116 62,106 Q70,114 70,102 Q70,114 78,106 Q70,116 70,130Z" fill="#b89030" transform="rotate(-12,70,130) scale(1.3)"/>
+          <path d="M130,135 Q130,121 122,111 Q130,119 130,107 Q130,119 138,111 Q130,121 130,135Z" fill="#c09028" transform="rotate(18,130,135) scale(1.1)"/>
+        </g>
+        <!-- Right side leaves -->
+        <g opacity="0.3">
+          <path d="M450,120 l3,8 7,-4 -3,6 8,1 -7,3 3,8 -5,-5 -3,8 -2,-8 -8,3 5,-6 -8,-2 7,-3 -3,-7 5,5Z" fill="#b85c38" transform="rotate(-25,450,120) scale(1)"/>
+          <path d="M510,128 l3,8 7,-4 -3,6 8,1 -7,3 3,8 -5,-5 -3,8 -2,-8 -8,3 5,-6 -8,-2 7,-3 -3,-7 5,5Z" fill="#c89040" transform="rotate(30,510,128) scale(0.85)"/>
+          <path d="M565,115 l3,8 7,-4 -3,6 8,1 -7,3 3,8 -5,-5 -3,8 -2,-8 -8,3 5,-6 -8,-2 7,-3 -3,-7 5,5Z" fill="#c06838" transform="rotate(-10,565,115) scale(1.05)"/>
+        </g>
+        <g opacity="0.2">
+          <path d="M490,135 Q490,121 482,111 Q490,119 490,107 Q490,119 498,111 Q490,121 490,135Z" fill="#b89030" transform="rotate(25,490,135) scale(1.2)"/>
+          <path d="M550,132 Q550,118 542,108 Q550,116 550,104 Q550,116 558,108 Q550,118 550,132Z" fill="#c09028" transform="rotate(-15,550,132) scale(1)"/>
+        </g>
+        <!-- Bare branch -->
+        <g fill="none" stroke="#7a5030" stroke-linecap="round" opacity="0.2">
+          <path d="M420,150 Q440,120 460,108 Q480,96 510,92" stroke-width="1.5"/>
+          <path d="M460,108 Q455,92 450,78" stroke-width="1"/>
+          <path d="M480,100 Q485,86 482,72" stroke-width="0.9"/>
+        </g>
+      </svg>
+      <!-- Floating leaves over text — LOW opacity -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none">
+        <g fill="#c06838" opacity="0.035">
+          <path d="M320,180 l2,6 5,-3 -2,5 6,1 -5,2 2,6 -4,-4 -2,6 -2,-6 -6,2 4,-4 -6,-2 5,-2 -2,-5 4,3Z" transform="rotate(45,320,180)"/>
+        </g>
+        <g fill="#b89030" opacity="0.025">
+          <path d="M70,280 Q70,270 65,264 Q70,268 70,260 Q70,268 75,264 Q70,270 70,280Z" transform="rotate(-20,70,280) scale(1.4)"/>
+        </g>
+        <g fill="#c06838" opacity="0.03">
+          <path d="M350,380 l2,5 5,-3 -2,4 6,1 -5,2 2,6 -4,-4 -2,6 -2,-6 -6,2 4,-4 -6,-2 5,-2 -2,-5 4,3Z" transform="rotate(60,350,380)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="deco deco-night">
+<!-- ★ Crescent moon — VISIBLE warm cream -->
+      <svg width="58" height="58" viewBox="0 0 58 58" style="top:10px;right:14px;">
+        <path d="M40,8 A20,20 0 1,1 20,48 A16,16 0 1,0 40,8Z" fill="#e8dcc0" opacity="0.4"/>
+      </svg>
+      <!-- ★ Stars — VISIBLE at edges -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none">
+        <g fill="#e8dcc0">
+          <!-- Edge stars — high opacity -->
+          <g opacity="0.35" transform="translate(50,42)"><polygon points="0,-6 1.4,-1.4 6,0 1.4,1.4 0,6 -1.4,1.4 -6,0 -1.4,-1.4"/></g>
+          <g opacity="0.28" transform="translate(140,25)"><polygon points="0,-5 1.2,-1.2 5,0 1.2,1.2 0,5 -1.2,1.2 -5,0 -1.2,-1.2"/></g>
+          <g opacity="0.3" transform="translate(270,50)"><polygon points="0,-5.5 1.3,-1.3 5.5,0 1.3,1.3 0,5.5 -1.3,1.3 -5.5,0 -1.3,-1.3"/></g>
+          <g opacity="0.22" transform="translate(368,130)"><polygon points="0,-4.5 1,-1 4.5,0 1,1 0,4.5 -1,1 -4.5,0 -1,-1"/></g>
+          <g opacity="0.26" transform="translate(40,200)"><polygon points="0,-5 1.2,-1.2 5,0 1.2,1.2 0,5 -1.2,1.2 -5,0 -1.2,-1.2"/></g>
+          <g opacity="0.3" transform="translate(380,280)"><polygon points="0,-5 1.2,-1.2 5,0 1.2,1.2 0,5 -1.2,1.2 -5,0 -1.2,-1.2"/></g>
+          <g opacity="0.24" transform="translate(30,380)"><polygon points="0,-4.5 1,-1 4.5,0 1,1 0,4.5 -1,1 -4.5,0 -1,-1"/></g>
+          <g opacity="0.28" transform="translate(370,440)"><polygon points="0,-5.5 1.3,-1.3 5.5,0 1.3,1.3 0,5.5 -1.3,1.3 -5.5,0 -1.3,-1.3"/></g>
+          <!-- Over-text stars — LOW opacity -->
+          <g opacity="0.06" transform="translate(200,260)"><polygon points="0,-3.5 0.8,-0.8 3.5,0 0.8,0.8 0,3.5 -0.8,0.8 -3.5,0 -0.8,-0.8"/></g>
+          <g opacity="0.05" transform="translate(280,360)"><polygon points="0,-3 0.7,-0.7 3,0 0.7,0.7 0,3 -0.7,0.7 -3,0 -0.7,-0.7"/></g>
+          <!-- Distant dots -->
+          <circle cx="100" cy="100" r="1.2" opacity="0.2"/><circle cx="250" cy="148" r="0.9" opacity="0.15"/>
+          <circle cx="335" cy="225" r="1.1" opacity="0.18"/><circle cx="65" cy="285" r="0.9" opacity="0.14"/>
+          <circle cx="190" cy="345" r="1.1" opacity="0.16"/><circle cx="390" cy="380" r="0.9" opacity="0.18"/>
+          <circle cx="120" cy="465" r="1.1" opacity="0.14"/><circle cx="295" cy="490" r="0.9" opacity="0.12"/>
+        </g>
+      </svg>
+      <!-- ★ Bottom: constellation line pattern — VISIBLE -->
+      <svg width="100%" height="80" viewBox="0 0 600 80" style="bottom:0;left:0;right:0" preserveAspectRatio="none">
+        <g stroke="#e8dcc0" fill="#e8dcc0" stroke-width="0.4" opacity="0.15">
+          <!-- Left constellation -->
+          <circle cx="30" cy="40" r="1.8"/><circle cx="60" cy="25" r="1.3"/><circle cx="90" cy="50" r="1.6"/>
+          <circle cx="120" cy="30" r="1.1"/><circle cx="80" cy="65" r="1.4"/>
+          <line x1="30" y1="40" x2="60" y2="25"/><line x1="60" y1="25" x2="90" y2="50"/>
+          <line x1="90" y1="50" x2="120" y2="30"/><line x1="90" y1="50" x2="80" y2="65"/>
+          <!-- Right constellation -->
+          <circle cx="480" cy="35" r="1.5"/><circle cx="510" cy="55" r="1.8"/><circle cx="540" cy="30" r="1.2"/>
+          <circle cx="570" cy="50" r="1.5"/><circle cx="550" cy="68" r="1.3"/>
+          <line x1="480" y1="35" x2="510" y2="55"/><line x1="510" y1="55" x2="540" y2="30"/>
+          <line x1="540" y1="30" x2="570" y2="50"/><line x1="510" y1="55" x2="550" y2="68"/>
+        </g>
+      </svg>
+      <!-- Blurred distant glow -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none" class="deco-blur">
+        <g fill="#c8b8e0" opacity="0.04">
+          <circle cx="80" cy="440" r="4"/><circle cx="340" cy="180" r="3.5"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="deco deco-snow">
+<!-- ★ Single snowflake top-right — VISIBLE -->
+      <svg width="50" height="50" viewBox="0 0 50 50" style="top:10px;right:12px;">
+        <g transform="translate(25,25)" stroke="#4a7090" stroke-linecap="round" fill="none">
+          <!-- 6 main arms -->
+          <line x1="0" y1="-18" x2="0" y2="18" stroke-width="0.7" opacity="0.32"/>
+          <line x1="-15.6" y1="-9" x2="15.6" y2="9" stroke-width="0.7" opacity="0.32"/>
+          <line x1="-15.6" y1="9" x2="15.6" y2="-9" stroke-width="0.7" opacity="0.32"/>
+          <!-- Branches on each arm -->
+          <line x1="0" y1="-11" x2="-4" y2="-15" stroke-width="0.5" opacity="0.26"/><line x1="0" y1="-11" x2="4" y2="-15" stroke-width="0.5" opacity="0.26"/>
+          <line x1="0" y1="11" x2="-4" y2="15" stroke-width="0.5" opacity="0.26"/><line x1="0" y1="11" x2="4" y2="15" stroke-width="0.5" opacity="0.26"/>
+          <line x1="-9.5" y1="-5.5" x2="-12" y2="-10" stroke-width="0.5" opacity="0.26"/><line x1="-9.5" y1="-5.5" x2="-14" y2="-4" stroke-width="0.5" opacity="0.26"/>
+          <line x1="9.5" y1="5.5" x2="12" y2="10" stroke-width="0.5" opacity="0.26"/><line x1="9.5" y1="5.5" x2="14" y2="4" stroke-width="0.5" opacity="0.26"/>
+          <line x1="-9.5" y1="5.5" x2="-14" y2="4" stroke-width="0.5" opacity="0.26"/><line x1="-9.5" y1="5.5" x2="-12" y2="10" stroke-width="0.5" opacity="0.26"/>
+          <line x1="9.5" y1="-5.5" x2="14" y2="-4" stroke-width="0.5" opacity="0.26"/><line x1="9.5" y1="-5.5" x2="12" y2="-10" stroke-width="0.5" opacity="0.26"/>
+          <!-- Center crystal -->
+          <circle cx="0" cy="0" r="1.8" fill="#4a7090" opacity="0.18"/>
+        </g>
+      </svg>
+      <!-- ★ Snowflakes at edges — VISIBLE blue -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none">
+        <defs>
+          <g id="sf-a">
+            <g stroke="#4a7090" stroke-linecap="round" fill="none">
+              <line x1="0" y1="-8" x2="0" y2="8" stroke-width="0.6"/><line x1="-6.9" y1="-4" x2="6.9" y2="4" stroke-width="0.6"/><line x1="-6.9" y1="4" x2="6.9" y2="-4" stroke-width="0.6"/>
+              <line x1="0" y1="-5" x2="-2" y2="-7" stroke-width="0.5"/><line x1="0" y1="-5" x2="2" y2="-7" stroke-width="0.5"/>
+              <line x1="0" y1="5" x2="-2" y2="7" stroke-width="0.5"/><line x1="0" y1="5" x2="2" y2="7" stroke-width="0.5"/>
+              <line x1="-4.3" y1="-2.5" x2="-5.5" y2="-5" stroke-width="0.5"/><line x1="-4.3" y1="-2.5" x2="-6.8" y2="-2" stroke-width="0.5"/>
+              <line x1="4.3" y1="2.5" x2="5.5" y2="5" stroke-width="0.5"/><line x1="4.3" y1="2.5" x2="6.8" y2="2" stroke-width="0.5"/>
+            </g>
+          </g>
+          <g id="sf-b">
+            <g stroke="#4a7090" stroke-linecap="round" fill="none">
+              <line x1="0" y1="-6" x2="0" y2="6" stroke-width="0.5"/><line x1="-5.2" y1="-3" x2="5.2" y2="3" stroke-width="0.5"/><line x1="-5.2" y1="3" x2="5.2" y2="-3" stroke-width="0.5"/>
+              <circle cx="0" cy="-6" r="0.9" fill="#4a7090"/><circle cx="0" cy="6" r="0.9" fill="#4a7090"/>
+              <circle cx="-5.2" cy="-3" r="0.9" fill="#4a7090"/><circle cx="5.2" cy="3" r="0.9" fill="#4a7090"/>
+              <circle cx="-5.2" cy="3" r="0.9" fill="#4a7090"/><circle cx="5.2" cy="-3" r="0.9" fill="#4a7090"/>
+            </g>
+          </g>
+        </defs>
+        <!-- Edge snowflakes — VISIBLE -->
+        <use href="#sf-a" transform="translate(35,55) scale(1.4)" opacity="0.25"/>
+        <use href="#sf-a" transform="translate(28,215) scale(1.1)" opacity="0.2"/>
+        <use href="#sf-b" transform="translate(380,240) scale(1.3)" opacity="0.22"/>
+        <use href="#sf-a" transform="translate(32,400) scale(1.2)" opacity="0.2"/>
+        <use href="#sf-b" transform="translate(375,410) scale(1)" opacity="0.18"/>
+        <!-- Over-text snowflakes — LOW opacity -->
+        <use href="#sf-a" transform="translate(200,120) scale(0.8)" opacity="0.05"/>
+        <use href="#sf-b" transform="translate(280,300) scale(0.7)" opacity="0.04"/>
+        <use href="#sf-a" transform="translate(150,420) scale(0.75)" opacity="0.045"/>
+      </svg>
+      <!-- ★ Bottom: snow drift / ground — VISIBLE -->
+      <svg width="100%" height="100" viewBox="0 0 600 100" style="bottom:0;left:0;right:0" preserveAspectRatio="none">
+        <!-- Gentle snow mounds -->
+        <path d="M0,80 Q50,55 120,65 Q200,75 280,58 Q360,42 440,60 Q520,78 600,62 L600,100 L0,100Z" fill="#e4ecf5" opacity="0.3"/>
+        <path d="M0,88 Q80,70 160,78 Q250,86 340,72 Q430,58 520,74 Q570,82 600,76 L600,100 L0,100Z" fill="#dce6f2" opacity="0.2"/>
+        <!-- Snowflakes landing on ground -->
+        <use href="#sf-b" transform="translate(60,52) scale(0.9)" opacity="0.18"/>
+        <use href="#sf-a" transform="translate(180,45) scale(0.7)" opacity="0.14"/>
+        <use href="#sf-b" transform="translate(350,48) scale(0.8)" opacity="0.16"/>
+        <use href="#sf-a" transform="translate(500,55) scale(0.9)" opacity="0.18"/>
+        <!-- Tiny frost crystals -->
+        <g fill="#4a7090" opacity="0.12">
+          <circle cx="100" cy="68" r="1.2"/><circle cx="240" cy="62" r="1"/><circle cx="420" cy="58" r="1.3"/><circle cx="560" cy="65" r="1"/>
+        </g>
+      </svg>
+      <!-- Blurred distant snowflakes -->
+      <svg width="100%" height="100%" viewBox="0 0 400 520" style="inset:0" preserveAspectRatio="none" class="deco-blur">
+        <use href="#sf-a" transform="translate(100,160) scale(1.5)" opacity="0.06"/>
+        <use href="#sf-b" transform="translate(320,350) scale(1.4)" opacity="0.05"/>
+      </svg>
+    </div>
+
     <div class="loading" id="loading">正在打开…</div>
     <div id="article-content" style="display:none">
       <div class="article-date" id="art-date"></div>
