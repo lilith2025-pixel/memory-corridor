@@ -110,6 +110,9 @@
   .char-1 .char-tag { background:rgba(160,120,48,0.15); color:var(--gold); }
   .char-2 .char-tag { background:rgba(138,90,122,0.15); color:var(--dusty); }
   .char-name { font-family:'Playfair Display',serif; font-size:3rem; font-weight:700; line-height:1; margin-bottom:0.2rem; color:var(--ink); }
+  .char-name a { color:inherit; text-decoration:none; transition:color 0.2s; }
+  .char-1 .char-name a:hover { color:var(--gold); }
+  .char-2 .char-name a:hover { color:var(--dusty); }
   .char-name-en { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.9rem; margin-bottom:1.5rem; letter-spacing:0.1em; }
   .char-1 .char-name-en { color:var(--gold); }
   .char-2 .char-name-en { color:var(--dusty); }
@@ -297,7 +300,8 @@ async function init() {
   } else {
     cc.innerHTML = '';
     characters.forEach(c => {
-      cc.innerHTML += `<div class="char-card ${c.style||'char-1'}"><div class="char-num">${c.number||''}</div><div class="char-tag">${c.tag||''}</div><div class="char-name">${c.name||''}</div><div class="char-name-en">${c.nameEn||''}</div><p class="char-desc">${c.desc||''}</p><div class="char-note">${c.note||''}</div></div>`;
+      const charLink = `character.html?f=${encodeURIComponent(c._filename)}`;
+      cc.innerHTML += `<div class="char-card ${c.style||'char-1'}" onclick="location.href='${charLink}'" style="cursor:pointer"><div class="char-num">${c.number||''}</div><div class="char-tag">${c.tag||''}</div><div class="char-name"><a href="${charLink}" onclick="event.stopPropagation()">${c.name||''}</a></div><div class="char-name-en">${c.nameEn||''}</div><p class="char-desc">${c.desc||''}</p><div class="char-note">${c.note||''}</div></div>`;
     });
   }
 
