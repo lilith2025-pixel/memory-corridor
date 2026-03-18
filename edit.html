@@ -57,18 +57,14 @@
   .field textarea{resize:vertical;min-height:80px;line-height:1.7;}
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
   .field-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+  .field-hint{font-size:0.6rem;color:var(--mist);text-transform:none;letter-spacing:0;}
+  .section-divider{border:none;border-top:1px dashed rgba(42,33,24,0.12);margin:1.8rem 0;} 
+  .section-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.78rem;letter-spacing:0.2em;color:var(--mist);text-transform:uppercase;margin-bottom:1.2rem;}
 
-  /* Quill overrides */
   .ql-toolbar{background:var(--bg);border:1px solid rgba(42,33,24,0.12) !important;border-radius:0;}
   .ql-container{background:var(--bg);border:1px solid rgba(42,33,24,0.12) !important;border-top:none !important;font-family:'Noto Serif SC',serif;font-size:0.95rem;}
   .ql-editor{min-height:200px;line-height:1.9;color:var(--ink);padding:1rem;}
   .ql-editor.ql-blank::before{color:var(--mist);font-style:italic;}
-
-  /* Theme swatches */
-  .theme-swatches{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.5rem;}
-  .theme-swatch{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform 0.2s,border-color 0.2s;display:flex;align-items:center;justify-content:center;font-size:0.75rem;}
-  .theme-swatch:hover{transform:scale(1.15);}
-  .theme-swatch.selected{border-color:var(--ink);}
 
   .btn-add{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(42,33,24,0.18);color:var(--mist);cursor:pointer;font-family:'Noto Serif SC',serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.2s;margin-top:0.3rem;}
   .btn-add:hover{border-color:var(--terra);color:var(--terra);}
@@ -123,7 +119,7 @@
           <span class="editing-badge" id="t-badge">编辑中</span>
         </div>
         <div class="field">
-          <label>内容 &nbsp;·&nbsp; <span style="font-size:0.6rem;color:var(--mist);text-transform:none;letter-spacing:0">用 &lt;em&gt;词&lt;/em&gt; 加颜色</span></label>
+          <label>内容 &nbsp;·&nbsp; <span class="field-hint">用 &lt;em&gt;词&lt;/em&gt; 加颜色</span></label>
           <textarea id="t-text" rows="5" placeholder="写下此刻…"></textarea>
         </div>
         <div class="field" style="max-width:180px"><label>日期</label><input id="t-date" placeholder="2025.03"></div>
@@ -159,9 +155,9 @@
             </select>
           </div>
         </div>
-        <div class="field"><label>首页摘要 <span style="font-size:0.6rem;color:var(--mist);text-transform:none;letter-spacing:0">· 显示在首页预览</span></label><textarea id="w-excerpt" rows="3" placeholder="一两句话描述这篇文章…"></textarea></div>
+        <div class="field"><label>首页摘要 <span class="field-hint">· 显示在首页预览</span></label><textarea id="w-excerpt" rows="3" placeholder="一两句话描述这篇文章…"></textarea></div>
         <div class="field">
-          <label>正文 <span style="font-size:0.6rem;color:var(--mist);text-transform:none;letter-spacing:0">· 点击"继续读"后显示的完整内容</span></label>
+          <label>正文 <span class="field-hint">· 点击"继续读"后显示的完整内容</span></label>
           <div id="w-body-editor"></div>
         </div>
         <div style="display:flex;gap:0.8rem;margin-top:1.5rem">
@@ -180,16 +176,66 @@
           <span id="c-label">新人物</span>
           <span class="editing-badge" id="c-badge">编辑中</span>
         </div>
+
+        <!-- 基本信息 -->
+        <div class="section-title">基本信息 · Basic</div>
         <div class="field-row">
-          <div class="field"><label>中文名</label><input id="c-name" placeholder="南 山"></div>
-          <div class="field"><label>英文名</label><input id="c-nameEn" placeholder="Nan Shan"></div>
-          <div class="field"><label>序号</label><input id="c-number" placeholder="一"></div>
-          <div class="field"><label>标签</label><input id="c-tag" placeholder="都市轻喜剧"></div>
+          <div class="field"><label>中文名</label><input id="c-name" placeholder="林晓薇"></div>
+          <div class="field"><label>英文名</label><input id="c-nameEn" placeholder="Lin Xiaowei"></div>
         </div>
-        <div class="field"><label>简介</label><textarea id="c-desc" rows="4" placeholder="人物简介…"></textarea></div>
-        <div class="field"><label>底部注释</label><input id="c-note" placeholder="「关于他的故事…」"></div>
-        <div class="field"><label>样式</label><select id="c-style"><option value="char-1">金色系</option><option value="char-2">紫色系</option><option value="char-3">蓝色系</option></select></div>
-        <div style="display:flex;gap:0.8rem;margin-top:1.5rem">
+        <div class="field-row3">
+          <div class="field"><label>序号</label><input id="c-number" placeholder="01"></div>
+          <div class="field"><label>标签</label><input id="c-tag" placeholder="品牌策略师"></div>
+          <div class="field"><label>样式</label><select id="c-style"><option value="char-1">金色系</option><option value="char-2">紫色系</option></select></div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- 档案信息 -->
+        <div class="section-title">人物档案 · Dossier</div>
+        <div class="field"><label>一句话定位 <span class="field-hint">· 显示在档案页头部</span></label><textarea id="c-identity" rows="2" placeholder="快消行业品牌策略师，理想主义的实用派。"></textarea></div>
+        <div class="field-row">
+          <div class="field"><label>年龄</label><input id="c-age" placeholder="32"></div>
+          <div class="field"><label>出身</label><input id="c-origin" placeholder="杭州"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>职业</label><input id="c-occupation" placeholder="品牌策略总监 · 某国际快消集团"></div>
+          <div class="field"><label>性格</label><input id="c-personality" placeholder="冷静、敏锐、不讨好"></div>
+        </div>
+        <div class="field"><label>头像/照片 URL <span class="field-hint">· Cloudinary 或其他图床链接，留空显示文字占位</span></label><input id="c-photo" placeholder="https://res.cloudinary.com/..."></div>
+
+        <hr class="section-divider">
+
+        <!-- 首页简介 -->
+        <div class="section-title">首页展示 · Homepage</div>
+        <div class="field"><label>首页简介 <span class="field-hint">· 显示在首页人物卡片上</span></label><textarea id="c-desc" rows="3" placeholder="人物简介…"></textarea></div>
+        <div class="field"><label>底部注释 <span class="field-hint">· 首页卡片底部小字</span></label><input id="c-note" placeholder="「她是我最想写好的角色。」"></div>
+
+        <hr class="section-divider">
+
+        <!-- 档案正文 -->
+        <div class="section-title">档案正文 · Story</div>
+        <div class="field">
+          <label>正文 <span class="field-hint">· 支持 Markdown：## 标题、**粗体**、*斜体*、> 引用、- 列表</span></label>
+          <textarea id="c-body" rows="12" placeholder="## 故事线
+
+林晓薇在快消行业摸爬滚打八年……
+
+## 人设核心
+
+她不是那种在会议室里声音最大的人……
+
+> &quot;你不需要让所有人喜欢你的方案。&quot;
+> ——陈瑾"></textarea>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- 延伸阅读 -->
+        <div class="section-title">延伸阅读 · Related Docs</div>
+        <div class="field"><label>关联文档 <span class="field-hint">· _writings/ 里的文件名，多个用逗号分隔</span></label><input id="c-related" placeholder="lin-xiaowei-industry.md, lin-xiaowei-career.md"></div>
+
+        <div style="display:flex;gap:0.8rem;margin-top:1.8rem">
           <button class="btn btn-primary" id="c-btn" onclick="saveCharacter()">发布</button>
           <button class="btn btn-ghost" onclick="closeForm('character')">取消</button>
         </div>
@@ -212,7 +258,6 @@ let storeCounter = 0;
 function storeItem(item) { const key='k'+(++storeCounter); itemStore.set(key,item); return key; }
 function getItem(key) { return itemStore.get(key); }
 
-// Init Quill after DOM ready
 function initQuill() {
   if (quillEditor) return;
   quillEditor = new Quill('#w-body-editor', {
@@ -332,6 +377,10 @@ function makeWritingFile(fm, body) {
   return makeFM(fm) + '\n' + (body || '');
 }
 
+function makeCharacterFile(fm, body) {
+  return makeFM(fm) + '\n' + (body || '');
+}
+
 function nowSlug() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}-${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}`;
@@ -340,6 +389,9 @@ function nowSlug() {
 async function loadAll() { loadThoughts(); loadWritings(); loadCharacters(); }
 
 let currentEditing = { thought: null, writing: null, character: null };
+
+// All character form field IDs
+const charFields = ['c-name','c-nameEn','c-number','c-tag','c-identity','c-age','c-origin','c-occupation','c-personality','c-photo','c-desc','c-note','c-body','c-related'];
 
 function openForm(type) {
   currentEditing[type] = null;
@@ -358,7 +410,7 @@ function openForm(type) {
     document.getElementById('w-theme').value='sunny';
     quillEditor.setContents([]);
   } else {
-    ['c-name','c-nameEn','c-number','c-tag','c-desc','c-note'].forEach(id=>document.getElementById(id).value='');
+    charFields.forEach(id => document.getElementById(id).value = '');
     document.getElementById('c-style').value='char-1';
   }
   const formId='form-'+(type==='thought'?'thought':type==='writing'?'writing':'character');
@@ -383,20 +435,28 @@ function openEditForm(type, key) {
     document.getElementById('w-excerpt').value=item.excerpt||'';
     document.getElementById('w-featured').value=item.featured?'true':'false';
     document.getElementById('w-theme').value=item.theme||'sunny';
-    // Set Quill content
     if (item._body) {
       quillEditor.clipboard.dangerouslyPasteHTML(item._body);
     } else {
       quillEditor.setContents([]);
     }
   } else {
-    document.getElementById('c-name').value=item.name||'';
-    document.getElementById('c-nameEn').value=item.nameEn||'';
-    document.getElementById('c-number').value=item.number||'';
-    document.getElementById('c-tag').value=item.tag||'';
-    document.getElementById('c-desc').value=item.desc||'';
-    document.getElementById('c-note').value=item.note||'';
-    document.getElementById('c-style').value=item.style||'char-1';
+    // Character — fill all fields
+    document.getElementById('c-name').value = item.name || '';
+    document.getElementById('c-nameEn').value = item.nameEn || '';
+    document.getElementById('c-number').value = item.number || '';
+    document.getElementById('c-tag').value = item.tag || '';
+    document.getElementById('c-style').value = item.style || 'char-1';
+    document.getElementById('c-identity').value = item.identity || '';
+    document.getElementById('c-age').value = item.age || '';
+    document.getElementById('c-origin').value = item.origin || '';
+    document.getElementById('c-occupation').value = item.occupation || '';
+    document.getElementById('c-personality').value = item.personality || '';
+    document.getElementById('c-photo').value = item.photo || '';
+    document.getElementById('c-desc').value = item.desc || '';
+    document.getElementById('c-note').value = item.note || '';
+    document.getElementById('c-body').value = item._body || '';
+    document.getElementById('c-related').value = item.related_docs || '';
   }
   const formId='form-'+(type==='thought'?'thought':type==='writing'?'writing':'character');
   document.getElementById(formId).style.display='block';
@@ -497,7 +557,8 @@ async function loadCharacters() {
     const key=storeItem(item);
     const div=document.createElement('div');
     div.className='item-row';
-    div.innerHTML=`<div class="item-info"><div class="item-name">${item.name||''} · ${item.nameEn||''}</div><div class="item-meta">${item.tag||''} · ${item._filename}</div></div><div class="item-actions"><button class="btn-sm-edit" data-key="${key}" data-type="character">编辑</button><button class="btn-sm-danger" data-path="${item._path}" data-sha="${item._sha}" data-reload="characters">删除</button></div>`;
+    const hasBody = item._body ? ' · 有档案正文' : '';
+    div.innerHTML=`<div class="item-info"><div class="item-name">${item.name||''} · ${item.nameEn||''}</div><div class="item-meta">${item.tag||''} · ${item._filename}${hasBody}</div></div><div class="item-actions"><button class="btn-sm-edit" data-key="${key}" data-type="character">编辑</button><button class="btn-sm-danger" data-path="${item._path}" data-sha="${item._sha}" data-reload="characters">删除</button></div>`;
     el.appendChild(div);
   });
   bindButtons();
@@ -510,11 +571,28 @@ async function saveCharacter() {
   const editing=currentEditing.character;
   showToast(editing?'更新中…':'发布中…','loading');
   try{
-    const content=makeFM({name,nameEn:document.getElementById('c-nameEn').value.trim(),number:document.getElementById('c-number').value.trim(),tag:document.getElementById('c-tag').value.trim(),desc:document.getElementById('c-desc').value.trim(),note:document.getElementById('c-note').value.trim(),style:document.getElementById('c-style').value});
-    if(editing)await updateFile(editing._path,editing._sha,content);
-    else await createFile(`_characters/${nowSlug()}.md`,content);
+    const fm = {
+      name,
+      nameEn: document.getElementById('c-nameEn').value.trim(),
+      number: document.getElementById('c-number').value.trim(),
+      tag: document.getElementById('c-tag').value.trim(),
+      style: document.getElementById('c-style').value,
+      identity: document.getElementById('c-identity').value.trim(),
+      age: document.getElementById('c-age').value.trim(),
+      origin: document.getElementById('c-origin').value.trim(),
+      occupation: document.getElementById('c-occupation').value.trim(),
+      personality: document.getElementById('c-personality').value.trim(),
+      photo: document.getElementById('c-photo').value.trim(),
+      desc: document.getElementById('c-desc').value.trim(),
+      note: document.getElementById('c-note').value.trim(),
+      related_docs: document.getElementById('c-related').value.trim()
+    };
+    const body = document.getElementById('c-body').value.trim();
+    const content = makeCharacterFile(fm, body);
+    if(editing) await updateFile(editing._path, editing._sha, content);
+    else await createFile(`_characters/${nowSlug()}.md`, content);
     showToast('✓ 成功，约1分钟后网站更新','success');
-    closeForm('character');loadCharacters();
+    closeForm('character'); loadCharacters();
   }catch(e){showToast('操作失败，请重试','error');}
   btn.disabled=false;
 }
